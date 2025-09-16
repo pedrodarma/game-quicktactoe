@@ -1,0 +1,19 @@
+.cell {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 25vw;
+	height: 25vw;
+	max-width: 170px;
+	max-height: 170px;
+	/* border: 1px solid var(--foreground); */
+	border-radius: 8px;
+	background-color: #000000;
+	font-size: 5rem;
+	cursor: pointer;
+	user-select: none;
+}
+
+.cell:hover {
+	background-color: #333333;
+}

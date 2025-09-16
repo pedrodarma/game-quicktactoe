@@ -1,0 +1,49 @@
+name: Build and Deploy website to DEV 🚀
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  checks: write
+  contents: write
+
+jobs:
+  build-and-export:
+    runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_API: ${ { secrets.NEXT_PUBLIC_API } }
+      NEXT_PUBLIC_API_IP: ${ { secrets.NEXT_PUBLIC_API_IP } }
+      NEXT_PUBLIC_API_BROKER: ${ { secrets.NEXT_PUBLIC_API_BROKER } }
+    environment:
+      name: development
+      # url: https://dev.quicktactoe.darma.page
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+
+      - name: Install
+        uses: actions/setup-node@v5
+        with:
+          node-version: 20.x
+          cache: yarn
+          check-latest: true
+          cache-dependency-path: ${{github.workspace}}/yarn.lock
+
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build Website and Export
+        run: yarn build
+
+      - run: touch build/.nojekyll
+
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4.7.3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: development_build # The branch the action should deploy to.
+          folder: build # The folder the action should deploy.
+          # clean: true # Automatically remove deleted files from the deploy branch
