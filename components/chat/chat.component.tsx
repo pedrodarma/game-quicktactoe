@@ -50,7 +50,7 @@ export function Chat() {
 			<div
 				className={`fixed top-0 transition-all duration-300 ${
 					isOpen ? 'right-0' : '-right-200'
-				} bottom-0 z-50 bg-white w-sm h-full border-l border-gray-200 dark:bg-gray-200 dark:border-gray-800`}>
+				} z-50 bg-white w-sm h-full border-l border-gray-200 dark:bg-gray-200 dark:border-gray-800`}>
 				<div className="p-3">
 					<ChatHeaderView
 						onClose={() => {
@@ -59,7 +59,7 @@ export function Chat() {
 					/>
 				</div>
 
-				<div className="flex flex-col h-[87vh] overflow-y-auto mb-1 scrollbar-hidden">
+				<div className="flex flex-col h-[73vh] sm:h-[87vh] overflow-y-auto mb-1 scrollbar-hidden">
 					<div className="flex flex-col gap-2 mb-0 px-3">
 						{messages.map((message, index) =>
 							message.from === websocketState.current.userId ? (

@@ -54,7 +54,7 @@ export function AppProvider({ children }: Props) {
 			// fetch the user list again
 			return;
 		}
-		console.log('Message received in AppProvider:', message);
+		// console.log('Message received in AppProvider:', message);
 	}
 
 	//  ╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗

@@ -138,7 +138,7 @@ export default function useWebSocketState({ url, onMessage }: Props) {
 				_ws.current = null;
 			}
 		} catch (error) {
-			console.error('Error during WebSocket disconnection:', error);
+			// console.error('Error during WebSocket disconnection:', error);
 		}
 	}
 
@@ -155,7 +155,7 @@ export default function useWebSocketState({ url, onMessage }: Props) {
 	}
 
 	async function _onError(error: Event) {
-		console.error('WebSocket error:', error);
+		// console.error('WebSocket error:', error);
 	}
 
 	async function _onClose(event: CloseEvent) {
@@ -176,7 +176,7 @@ export default function useWebSocketState({ url, onMessage }: Props) {
 
 			onMessage(message);
 		} catch (error) {
-			console.error('Error processing WebSocket message:', error);
+			// console.error('Error processing WebSocket message:', error);
 		}
 	}
 
@@ -187,7 +187,7 @@ export default function useWebSocketState({ url, onMessage }: Props) {
 		) {
 			_ws.current.send(message);
 		} else {
-			console.error('WebSocket is not open. Cannot send message.');
+			// console.error('WebSocket is not open. Cannot send message.');
 		}
 	}
 
@@ -216,7 +216,7 @@ export default function useWebSocketState({ url, onMessage }: Props) {
 			state.current.lastMessage = message;
 		} else {
 			// eslint-disable-next-line no-console
-			console.error('WebSocket is not open. Cannot send message.');
+			// console.error('WebSocket is not open. Cannot send message.');
 		}
 		//
 	}
@@ -242,7 +242,7 @@ export default function useWebSocketState({ url, onMessage }: Props) {
 			state.current.lastMessage = message;
 		} else {
 			// eslint-disable-next-line no-console
-			console.error('WebSocket is not open. Cannot send message.');
+			// console.error('WebSocket is not open. Cannot send message.');
 		}
 	}
 
@@ -273,7 +273,7 @@ export default function useWebSocketState({ url, onMessage }: Props) {
 			state.current.lastMessage = message;
 		} else {
 			// eslint-disable-next-line no-console
-			console.error('WebSocket is not open. Cannot send message.');
+			// console.error('WebSocket is not open. Cannot send message.');
 		}
 	}
 

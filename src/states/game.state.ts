@@ -39,7 +39,7 @@ export default function useWebSocketState() {
 
 		if (state.gamesLive.length === 0) {
 			const gameId = await _create();
-			console.log('Created game with ID:', gameId);
+			// console.log('Created game with ID:', gameId);
 			_fetchGamesLive();
 		}
 	}
@@ -49,7 +49,7 @@ export default function useWebSocketState() {
 			const games = await GameService.listLive();
 			setState((current) => ({ ...current, gamesLive: games }));
 		} catch (error) {
-			console.error('Error fetching live games:', error);
+			// console.error('Error fetching live games:', error);
 		}
 	}
 
@@ -73,11 +73,11 @@ export default function useWebSocketState() {
 				newBoard[row][col] = 'X';
 				setState((current) => ({ ...current, board: newBoard }));
 			} else {
-				console.warn('Invalid move, position already taken');
+				// console.warn('Invalid move, position already taken');
 			}
 			return newBoard;
 		} catch (error) {
-			console.error('Error playing move:', error);
+			// console.error('Error playing move:', error);
 		}
 	}
 
