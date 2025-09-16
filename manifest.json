@@ -1,0 +1,12 @@
+{
+	"name": "Quick Tac Toe",
+	"short_name": "QuickTacToe",
+
+	"start_url": "index.html",
+	"background_color": "#1F303E",
+	"display": "standalone",
+	"scope": "/",
+	"theme_color": "#1F303E",
+
+	"orientation": "portrait"
+}
