@@ -78,21 +78,3 @@ export function Chat() {
 		</>
 	);
 }
-
-function useKeyboardStatus() {
-	const [isOpen, setIsOpen] = useState(false);
-
-	useEffect(() => {
-		let initialHeight = window.innerHeight;
-
-		const handleResize = () => {
-			const diff = initialHeight - window.innerHeight;
-			setIsOpen(diff > 150); // se diminuiu mais que ~150px, teclado aberto
-		};
-
-		window.addEventListener('resize', handleResize);
-		return () => window.removeEventListener('resize', handleResize);
-	}, []);
-
-	return isOpen;
-}
