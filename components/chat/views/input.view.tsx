@@ -14,6 +14,7 @@ export function InputView() {
 	return (
 		<div className="flex flex-row justify-between items-center gap-2 mb-2 p-3">
 			<input
+				id="chat-input"
 				type="text"
 				ref={inputRef}
 				autoFocus
@@ -33,6 +34,7 @@ export function InputView() {
 			/>
 
 			<span
+				id="send-message-button"
 				className=" material-icons-round -rotate-35 mb-1 text-gray-500 hover:text-green-600 transition-colors"
 				style={{ cursor: 'pointer' }}
 				onClick={() => {

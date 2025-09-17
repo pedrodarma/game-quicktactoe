@@ -8,6 +8,7 @@ export function ChatButtonView({ onClick = () => {} }: Props) {
 	return (
 		<div className="fixed top-4 right-2 z-50 sm:top-10 sm:right-10 scale-80 sm:scale-100">
 			<div
+				id="chat-button"
 				className="relative bg-blue-400 p-3 pb-1 rounded-full shadow-lg hover:shadow-xl transition-shadow"
 				onClick={onClick}>
 				{/* Ícone */}

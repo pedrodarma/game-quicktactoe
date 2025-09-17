@@ -48,9 +48,9 @@ export function Chat() {
 			/>
 
 			<div
-				className={`fixed top-0 transition-all duration-300 ${
+				className={`fixed top-0 bottom-0 transition-all duration-300 ${
 					isOpen ? 'right-0' : '-right-200'
-				} z-50 bg-white w-sm h-full border-l border-gray-200 dark:bg-gray-200 dark:border-gray-800`}>
+				} z-50 bg-white w-sm  border-l border-gray-200 dark:bg-gray-200 dark:border-gray-800`}>
 				<div className="p-3">
 					<ChatHeaderView
 						onClose={() => {
@@ -59,8 +59,9 @@ export function Chat() {
 					/>
 				</div>
 
-				<div className="flex flex-col h-[73vh] sm:h-[87vh] overflow-y-auto mb-1 scrollbar-hidden">
-					<div className="flex flex-col gap-2 mb-0 px-3">
+				<div
+					className={`flex flex-col overflow-y-auto mb-1 scrollbar-hidden h-full [max-height:calc(100dvh-120px)]`}>
+					<div className="flex flex-col gap-2 mb-0 px-3 h-full">
 						{messages.map((message, index) =>
 							message.from === websocketState.current.userId ? (
 								<MyMessageView key={index} message={message} />
@@ -76,4 +77,22 @@ export function Chat() {
 			</div>
 		</>
 	);
+}
+
+function useKeyboardStatus() {
+	const [isOpen, setIsOpen] = useState(false);
+
+	useEffect(() => {
+		let initialHeight = window.innerHeight;
+
+		const handleResize = () => {
+			const diff = initialHeight - window.innerHeight;
+			setIsOpen(diff > 150); // se diminuiu mais que ~150px, teclado aberto
+		};
+
+		window.addEventListener('resize', handleResize);
+		return () => window.removeEventListener('resize', handleResize);
+	}, []);
+
+	return isOpen;
 }
