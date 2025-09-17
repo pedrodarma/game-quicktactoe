@@ -34,7 +34,7 @@ export default function RootLayout({
 					sizes="180x180"
 					href="/icons/apple-touch-icon.png"
 				/>
-				<meta name="apple-mobile-web-app-capable" content="yes" />
+				<meta name="mobile-web-app-capable" content="yes" />
 				<meta name="theme-color" content="#00ffff" />
 			</head>
 			<body
