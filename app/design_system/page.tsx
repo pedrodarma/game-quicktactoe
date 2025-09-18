@@ -1,8 +1,5 @@
 'use client';
 
-import { Footer, SquaredBackground } from '@components';
-import Link from 'next/link';
-import { OrbitProgress } from 'react-loading-indicators';
 import { LargeTitle } from '../../@design_system/titles/large.title';
 import { MediumTitle } from '../../@design_system/titles/medium.title';
 import { SmallTitle } from '../../@design_system/titles/small.title';
@@ -126,10 +123,10 @@ export default function DesignSystem() {
 
 				<h1>Buttons</h1>
 				<div className="flex flex-row gap-4 mb-4">
-					<PrimaryButton>Button</PrimaryButton>
-					<SecondaryButton>Button</SecondaryButton>
-					<OutlineButton>Button</OutlineButton>
-					<TextButton>Button</TextButton>
+					<PrimaryButton onClick={() => {}}>Button</PrimaryButton>
+					<SecondaryButton onClick={() => {}}>Button</SecondaryButton>
+					<OutlineButton onClick={() => {}}>Button</OutlineButton>
+					<TextButton onClick={() => {}}>Button</TextButton>
 				</div>
 				<div className="flex flex-row gap-4 mb-4">
 					<CircularButton icon={faCoffee} onClick={() => {}} />

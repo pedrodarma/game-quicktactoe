@@ -1,10 +1,19 @@
 'use client';
 
-import React, { createContext, ReactNode, useContext, useEffect } from 'react';
+import React, {
+	createContext,
+	ReactNode,
+	useCallback,
+	useContext,
+	useEffect,
+	useState,
+} from 'react';
 import { AppProviderType } from './app.provider.types';
-import { WebSocketMessage } from '@models';
+import { User, WebSocketMessage } from '@models';
 import { useUserState } from './states/user.state';
 import useWebSocketState from './states/websocket.state';
+import { GameService, UserService } from '@services';
+import { useRouter } from 'next/navigation';
 
 export const AppContext = createContext<AppProviderType | undefined>(undefined);
 
@@ -12,22 +21,25 @@ interface Props {
 	children: ReactNode;
 }
 
-const url = `${process.env.NEXT_PUBLIC_API_BROKER}/chat`;
-
 export function AppProvider({ children }: Props) {
+	const _url = `${process.env.NEXT_PUBLIC_API_BROKER}/chat`;
+	const router = useRouter();
+
 	//  ╦╔╗╔╦╔╦╗╦╔═╗╦   ╔═╗╔╦╗╔═╗╔╦╗╔═╗╔═╗
 	//  ║║║║║ ║ ║╠═╣║   ╚═╗ ║ ╠═╣ ║ ║╣ ╚═╗
 	//  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝ ╚═╝ ╩ ╩ ╩ ╩ ╚═╝╚═╝
+	const [users, setUsers] = useState<User[]>([]); // Example state
 	const [userState, userActions] = useUserState();
 	const [websocketState, websocketActions] = useWebSocketState({
-		url,
-		onMessage: _handleMessages,
+		url: _url,
+		onMessage: useCallback(_handleMessages, [_url]),
 	});
 
 	//  ╔═╗╔╦╗╔═╗╔╦╗╔═╗╔═╗
 	//  ╚═╗ ║ ╠═╣ ║ ║╣ ╚═╗
 	//  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝╚═╝
 	const AppStates = {
+		users,
 		userState,
 		websocketState,
 	};
@@ -52,15 +64,29 @@ export function AppProvider({ children }: Props) {
 				message.data?.event === 'new_user')
 		) {
 			// fetch the user list again
+			const users = await UserService.list();
+			// console.log('Fetched users:', { users });
+			setUsers(users);
+			// userActions.setUsers(users);
+			// console.log('Updated user list:', users);
 			return;
 		}
 		// console.log('Message received in AppProvider:', message);
+	}
+
+	async function _createGame() {
+		const gameHash = await GameService.create();
+		router.push(`/game#${gameHash}`);
+
+		// console.log({ gameHash });
+		// router.push('/game/1234');
 	}
 
 	//  ╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
 	//  ╠═╣║   ║ ║║ ║║║║╚═╗
 	//  ╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
 	const AppActions = {
+		createGame: _createGame,
 		...websocketActions,
 		...userActions,
 	};

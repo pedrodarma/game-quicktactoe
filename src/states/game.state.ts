@@ -14,7 +14,7 @@ interface GameState {
 	// board: Constants.cleanBoard;
 }
 
-export default function useWebSocketState() {
+export default function useGameState() {
 	//  ╔═╗╔╦╗╔═╗╔╦╗╔═╗
 	//  ╚═╗ ║ ╠═╣ ║ ║╣
 	//  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝

@@ -1,7 +1,7 @@
 'use client';
 
 import { DataValue, User, WebSocketMessage } from '@models';
-import { IPService } from '@services';
+// import { IPService } from '@services';
 import { useEffect, useRef, useState } from 'react';
 
 interface WebSockerState {
@@ -83,10 +83,10 @@ export default function useWebSocketState({ url, onMessage }: Props) {
 		_connect();
 	}
 
-	async function _fetchIP() {
-		const ip = await IPService.getCurrent();
-		// setUrl(`${_url}?ip=${ip}`);
-	}
+	// async function _fetchIP() {
+	// 	const ip = await IPService.getCurrent();
+	// 	// setUrl(`${_url}?ip=${ip}`);
+	// }
 
 	function _localUser(): User | undefined {
 		try {
@@ -138,7 +138,7 @@ export default function useWebSocketState({ url, onMessage }: Props) {
 				_ws.current = null;
 			}
 		} catch (error) {
-			// console.error('Error during WebSocket disconnection:', error);
+			//
 		}
 	}
 
@@ -174,9 +174,9 @@ export default function useWebSocketState({ url, onMessage }: Props) {
 			state.current.lastMessage = message;
 			state.current.messages = [...state.current.messages, message];
 
-			onMessage(message);
-		} catch (error) {
-			// console.error('Error processing WebSocket message:', error);
+			onMessage?.(message);
+		} catch {
+			//
 		}
 	}
 
@@ -186,8 +186,6 @@ export default function useWebSocketState({ url, onMessage }: Props) {
 			state.current.status === connectionStatus[ReadyState.OPEN]
 		) {
 			_ws.current.send(message);
-		} else {
-			// console.error('WebSocket is not open. Cannot send message.');
 		}
 	}
 
@@ -212,13 +210,9 @@ export default function useWebSocketState({ url, onMessage }: Props) {
 		};
 		if (state.current.status === connectionStatus[ReadyState.OPEN]) {
 			sendMessage(JSON.stringify(message));
-			// state.current.messages = [...state.current.messages, message];
+
 			state.current.lastMessage = message;
-		} else {
-			// eslint-disable-next-line no-console
-			// console.error('WebSocket is not open. Cannot send message.');
 		}
-		//
 	}
 
 	interface SendMessageProps {
@@ -240,9 +234,6 @@ export default function useWebSocketState({ url, onMessage }: Props) {
 
 			// state.current.messages = [...state.current.messages, message];
 			state.current.lastMessage = message;
-		} else {
-			// eslint-disable-next-line no-console
-			// console.error('WebSocket is not open. Cannot send message.');
 		}
 	}
 
@@ -263,17 +254,12 @@ export default function useWebSocketState({ url, onMessage }: Props) {
 			to,
 			data: {
 				event: type,
-				// ...data,
 			},
 		};
 		if (state.current.status === connectionStatus[ReadyState.OPEN]) {
 			sendMessage(JSON.stringify(message));
 
-			// state.current.messages = [...state.current.messages, message];
 			state.current.lastMessage = message;
-		} else {
-			// eslint-disable-next-line no-console
-			// console.error('WebSocket is not open. Cannot send message.');
 		}
 	}
 

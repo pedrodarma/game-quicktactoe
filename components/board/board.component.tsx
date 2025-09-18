@@ -5,6 +5,7 @@ import { BoardHeader } from './views/header.view';
 
 export function Board() {
 	const { gameState, playMove } = useGameContext();
+	// console.log('Rendering Board with gameState:', gameState);
 	return (
 		<div className="container flex flex-col justify-center items-center gap-8 h-full">
 			<BoardHeader />
