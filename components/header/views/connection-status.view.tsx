@@ -1,5 +1,6 @@
 'use client';
 
+import { useAppContext } from '@providers';
 // import { useWebsocketContext } from '@/src/providers/websocket.provider';
 import { useEffect, useState } from 'react';
 
@@ -12,21 +13,24 @@ type _Status =
 	| 'Uninstantiated';
 
 export function StatusView() {
-	// const { websocketState } = useWebsocketContext();
+	const { websocketState } = useAppContext();
 	const [status, setStatus] = useState<_Status>('Uninstantiated');
 
-	// useEffect(() => {
-	// 	const _status = websocketState.current.status as _Status;
-	// 	setStatus(_status);
-	// }, [websocketState.current.status]);
+	useEffect(() => {
+		const timer = setInterval(() => {
+			const _status = websocketState.current.status as _Status;
+			setStatus(_status);
+		}, 3000);
+		return () => clearInterval(timer);
+	}, []);
 
 	const _colors = {
-		Connecting: 'orange',
-		Open: 'foreground',
-		Closing: 'blue',
-		Closed: 'red',
-		Error: 'red',
-		Uninstantiated: 'gray',
+		Connecting: 'orange-500',
+		Open: 'green-500',
+		Closing: 'blue-500',
+		Closed: 'red-300',
+		Error: 'red-500',
+		Uninstantiated: 'gray-500',
 	};
 
 	const _color = () => _colors[status] ?? 'red-300';
@@ -34,14 +38,8 @@ export function StatusView() {
 	return (
 		<div className={`flex w-3 h-3 rounded-full`}>
 			<div
-				className={`w-3 h-3 rounded-full`}
-				title={status}
-				style={{
-					// width: 10,
-					// height: 10,
-					backgroundColor: _color(),
-					// borderRadius: '50%',
-				}}></div>
+				className={`w-3 h-3 rounded-full bg-${_color()}`}
+				title={status}></div>
 			{/* {_color} */}
 		</div>
 	);

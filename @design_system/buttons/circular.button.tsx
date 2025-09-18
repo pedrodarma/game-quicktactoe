@@ -20,7 +20,7 @@ export function CircularButton(props: Props) {
 	return (
 		<div
 			id={id}
-			className={`relative bg-${_color}-500 hover:bg-${_color}-600 p-3 rounded-full shadow-lg hover:shadow-xl transition-all`}
+			className={`relative bg-${_color}-500 hover:bg-${_color}-600 p-3 rounded-full shadow-lg hover:shadow-xl transition-all cursor-pointer`}
 			onClick={onClick}>
 			<FontAwesomeIcon icon={icon} className="fa-lg text-white" />
 

@@ -4,7 +4,7 @@ import { StatusView } from './views/connection-status.view';
 export function MainHeader() {
 	return (
 		<div className="flex flex-col items-start gap-1 w-full max-w-lg mx-auto">
-			<div className="max-w-lg flex gap-4 justify-start items-center">
+			<div className="pt-4 flex gap-4 justify-start items-center">
 				<MediumTitle>QuickTacToe</MediumTitle>
 
 				<div>

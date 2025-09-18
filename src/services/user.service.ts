@@ -9,11 +9,12 @@ export const UserService = {
 async function _list(): Promise<User[]> {
 	try {
 		const response = await fetch(`${Constants.API}/users`);
-		const data: User[] = await response.json();
 
 		if (response.status !== 200) {
 			throw new Error('Failed to fetch Users');
 		}
+
+		const data: User[] = await response.json();
 
 		return data;
 	} catch (error) {
@@ -28,13 +29,20 @@ interface Props {
 async function _get({ id }: Props): Promise<User> {
 	try {
 		const response = await fetch(`${Constants.API}/users/${id}`);
-		const data: User = await response.json();
 
 		if (response.status !== 200) {
 			throw new Error('Failed to fetch User');
 		}
 
-		return data;
+		const data = await response.text();
+
+		if (!data || data === '') {
+			throw new Error('User not found');
+		}
+
+		const user: User = JSON.parse(data);
+
+		return user;
 	} catch (error) {
 		throw error;
 	}

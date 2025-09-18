@@ -12,7 +12,7 @@ export function Footer() {
 			<a
 				href="https://github.com/pedrodarma/game-quicktactoe"
 				target="_blank"
-				className="flex items-center gap-2 hover:underline hover:underline-offset-4"
+				className="flex items-center gap-2"
 				rel="noopener noreferrer">
 				<FontAwesomeIcon icon={faGithub} className="fa-lg" />
 

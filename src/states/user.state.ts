@@ -43,28 +43,36 @@ export function useUserState() {
 	}
 
 	async function _initialize() {
-		let _user: UserState;
-		const local = _localUser();
+		try {
+			let _user: UserState;
+			const local = _localUser();
 
-		if (local) {
-			const remote = await UserService.get({ id: local.id });
+			if (local) {
+				const remote = await UserService.get({ id: local.id });
 
-			if (remote) {
-				_user = remote;
-				_updateLocalUser(remote);
-			} else {
-				_user = local;
+				if (remote) {
+					_user = remote;
+					_updateLocalUser(remote);
+				} else {
+					_user = local;
+				}
+
+				setState(_user);
 			}
-
-			setState(_user);
+		} catch (error) {
+			//
 		}
 	}
 
 	async function _register(userId: string) {
-		const user = await UserService.get({ id: userId });
-		if (user) {
-			setState(user);
-			_updateLocalUser(user);
+		try {
+			const user = await UserService.get({ id: userId });
+			if (user) {
+				setState(user);
+				_updateLocalUser(user);
+			}
+		} catch (error) {
+			//
 		}
 	}
 

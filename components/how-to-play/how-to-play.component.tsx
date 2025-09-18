@@ -1,4 +1,4 @@
-import { MediumText, MediumTitle } from '@design_system';
+import { LargeText, MediumText, MediumTitle } from '@design_system';
 import styles from './how-to-play.component.module.css';
 import { faDice } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -60,7 +60,7 @@ export function HowToPlay() {
 					<label
 						htmlFor="modal-toggle"
 						className="bg-black hover:bg-gray-600 text-white text-center font-bold py-2 px-4 rounded cursor-pointer mt-4 transition-colors">
-						Done
+						<LargeText>Done</LargeText>
 					</label>
 				</div>
 			</div>
