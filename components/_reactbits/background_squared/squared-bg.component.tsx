@@ -17,6 +17,7 @@ interface Props {
 	borderColor?: CanvasStrokeStyle;
 	squareSize?: number;
 	hoverFillColor?: CanvasStrokeStyle;
+	gradientColor?: string;
 }
 
 export const SquaredBackground: React.FC<Props> = ({
@@ -25,6 +26,8 @@ export const SquaredBackground: React.FC<Props> = ({
 	borderColor = '#999',
 	squareSize = 60,
 	hoverFillColor = '#222',
+	// gradientColor = '#060010',
+	gradientColor = 'rgba(0, 0, 0, 0.5)',
 }) => {
 	const canvasRef = useRef<HTMLCanvasElement>(null);
 	const requestRef = useRef<number | null>(null);
@@ -84,7 +87,7 @@ export const SquaredBackground: React.FC<Props> = ({
 				Math.sqrt(canvas.width ** 2 + canvas.height ** 2) / 2,
 			);
 			gradient.addColorStop(0, 'rgba(0, 0, 0, 0)');
-			gradient.addColorStop(1, '#060010');
+			gradient.addColorStop(1, gradientColor);
 
 			ctx.fillStyle = gradient;
 			ctx.fillRect(0, 0, canvas.width, canvas.height);

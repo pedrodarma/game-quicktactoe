@@ -1,3 +1,5 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { useAppContext } from '@providers';
 import { useRef } from 'react';
 
@@ -33,10 +35,9 @@ export function InputView() {
 				}}
 			/>
 
-			<span
-				id="send-message-button"
-				className=" material-icons-round -rotate-35 mb-1 text-gray-500 hover:text-green-600 transition-colors"
-				style={{ cursor: 'pointer' }}
+			<FontAwesomeIcon
+				icon={faPaperPlane}
+				className="fa-lg text-black hover:text-green-600 transition-colors"
 				onClick={() => {
 					if (inputRef.current) {
 						const text = inputRef.current.value.trim();
@@ -45,9 +46,8 @@ export function InputView() {
 							inputRef.current.value = '';
 						}
 					}
-				}}>
-				send
-			</span>
+				}}
+			/>
 		</div>
 	);
 }

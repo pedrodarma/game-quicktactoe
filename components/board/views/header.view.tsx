@@ -1,14 +1,19 @@
-import styles from './header.view.module.css';
+import { SmallTitle } from '@design_system';
 
 export function BoardHeader() {
 	return (
-		<div className="container flex flex-row justify-between items-center gap-4">
+		<div className="flex flex-row justify-between items-center gap-4 w-full max-w-lg mx-auto">
 			<div className="flex flex-col items-center">
-				<h3 className="text-center text-lg">Player #1 </h3>
-				{/* <div>(you)</div> */}
+				<SmallTitle>Player #1</SmallTitle>
+
+				<small>(you)</small>
 			</div>
 			<span>vs</span>
-			<h3 className="text-center text-lg">Player #2</h3>
+			<div className="flex flex-col items-center">
+				<SmallTitle>Player #2</SmallTitle>
+
+				<small>(opponent)</small>
+			</div>
 		</div>
 	);
 }

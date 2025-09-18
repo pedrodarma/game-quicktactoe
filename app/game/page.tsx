@@ -6,9 +6,9 @@ import { Board, Footer, Header } from '@components';
 export default function Game() {
 	return (
 		<GameProvider>
-			<div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center h-dvh p-8 pb-20 gap-16 sm:p-20">
+			<div className="flex flex-col h-dvh px-8 pb-20 gap-16 sm:p-20 sm:pt-10">
 				<Header />
-				<main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
+				<main className="flex flex-col grow gap-[32px] row-start-2 items-center sm:items-start">
 					<Board />
 				</main>
 				<Footer />

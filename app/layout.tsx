@@ -1,19 +1,7 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
-import 'material-icons/iconfont/material-icons.css';
 import { AppProvider } from '@providers';
 import { Chat } from '@components';
-
-const geistSans = Geist({
-	variable: '--font-geist-sans',
-	subsets: ['latin'],
-});
-
-const geistMono = Geist_Mono({
-	variable: '--font-geist-mono',
-	subsets: ['latin'],
-});
 
 export const metadata: Metadata = {
 	title: 'QuickTactoe',
@@ -37,8 +25,7 @@ export default function RootLayout({
 				<meta name="mobile-web-app-capable" content="yes" />
 				<meta name="theme-color" content="#00ffff" />
 			</head>
-			<body
-				className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans h-dvh`}>
+			<body className={` antialiased font-sans h-dvh`}>
 				<AppProvider>
 					{children}
 					{/* chat button */}

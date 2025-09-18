@@ -1,10 +1,13 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
-	content: ['./app/**/*.{js,ts,jsx,tsx,html}'], // caminhos pro seu projeto
+export const tailwindcss = {
+	content: [
+		'./app/**/*.{js,ts,jsx,tsx,html}',
+		'./@design_system/**/*.{js,ts,jsx,tsx,html}',
+	], // caminhos pro seu projeto
 	theme: {
 		extend: {
 			colors: {
-				background: 'var(--background)',
+				background: 'red',
 				foreground: 'var(--foreground)',
 			},
 			fontFamily: {
@@ -15,3 +18,4 @@ module.exports = {
 	},
 	darkMode: 'media', // ou 'class' se quiser controlar manualmente
 };
+export default tailwindcss;
