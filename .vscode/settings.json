@@ -45,8 +45,6 @@
     "**/yarn.lock": true,
     "**/package-lock.json": true,
     "**/node_modules": true,
-    "**/Podfile": true,
-    "**/Podfile.lock": true,
     "**/*.svg": true,
     "**/*.storyboard": true,
     "**/responses": true,

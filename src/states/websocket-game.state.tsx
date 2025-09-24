@@ -1,6 +1,6 @@
 'use client';
 
-import { DataValue, User, WebSocketMessage } from '@models';
+import { User, WebSocketMessage } from '@models';
 import { IPService } from '@services';
 import { useEffect, useRef, useState } from 'react';
 

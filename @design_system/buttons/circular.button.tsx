@@ -15,7 +15,6 @@ interface Props {
 export function CircularButton(props: Props) {
 	const { id, icon, disabled, showBadge, color = 'blue', onClick } = props;
 	const _color = disabled ? 'gray' : color;
-	const _text = disabled ? 'gray' : color;
 
 	return (
 		<div

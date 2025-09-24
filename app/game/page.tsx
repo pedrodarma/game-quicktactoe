@@ -10,14 +10,14 @@ export default function Game() {
 	const [hash, setHash] = useState<string>();
 	// // router.
 	useEffect(() => {
-		// URL completa
-		const fullUrl = window?.location.href;
+		// // URL completa
+		// const fullUrl = window?.location.href;
 
-		// Apenas o pathname (/game/abc123)
-		const path = window?.location.pathname;
+		// // Apenas o pathname (/game/abc123)
+		// const path = window?.location.pathname;
 
-		// Apenas a query string (?hash=value)
-		const query = window?.location.search;
+		// // Apenas a query string (?hash=value)
+		// const query = window?.location.search;
 
 		// Apenas o hash (#top)
 		const hashFragment = window?.location.hash;
@@ -39,7 +39,7 @@ export default function Game() {
 			userId={userState?.id || websocketState.current.userId || ''}>
 			<div className="flex flex-col h-dvh px-8 pb-20 gap-16 sm:p-20 sm:pt-10">
 				<GameHeader />
-				<main className="flex flex-col grow gap-[32px] row-start-2 items-center sm:items-start">
+				<main className="flex flex-col grow gap-[32px] row-start-2 items-center justify-center">
 					<Board />
 				</main>
 				<Footer />

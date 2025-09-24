@@ -27,9 +27,7 @@ export function Chat() {
 			if (messages.length === _messages.length) {
 				return;
 			}
-			setMessages((prevMessages) =>
-				_messages.filter((msg) => msg.type === 'chat'),
-			);
+			setMessages(() => _messages.filter((msg) => msg.type === 'chat'));
 			// if (autoScroll) {
 			bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
 			// }
