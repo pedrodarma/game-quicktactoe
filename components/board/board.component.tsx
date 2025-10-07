@@ -5,6 +5,7 @@ import { Cell } from './views/cell.view';
 import { BoardHeader } from './views/header.view';
 import { LargeText, PrimaryButton } from '@design_system';
 import { BoardCells } from '@models';
+import { LoadingGame } from '@components';
 
 export function Board() {
 	const { createGame } = useAppContext();
@@ -34,8 +35,16 @@ export function Board() {
 				</LargeText>
 			</div>
 			<div
+				className={`flex flex-col justify-center items-center gap-1 transition-all ${
+					gameState.status === 'waiting' ? 'block scale-190' : 'hidden scale-10'
+				}`}>
+				<LoadingGame />
+			</div>
+			<div
 				className={`container flex flex-col justify-center items-center gap-8 h-100 transition-all ${
-					hasWinner ? 'scale-40' : 'opacity-100'
+					gameState.status === 'waiting' || hasWinner
+						? 'scale-40'
+						: 'opacity-100'
 				} `}>
 				{/* <div className="scale-70">{JSON.stringify(gameState)}</div> */}
 				<BoardHeader />

@@ -96,7 +96,7 @@ export function GameProvider({ hash, children }: Props) {
 		}
 		if (message.type === 'event' && message.data?.event === 'game_over') {
 			gameActions.setWinner(
-				'game_over',
+				'finished',
 				message.data?.winner as string,
 				message.data?.winningPositions as BoardCells[],
 			);

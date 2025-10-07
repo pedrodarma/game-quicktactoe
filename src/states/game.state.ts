@@ -5,11 +5,13 @@ import { GameService } from '@services';
 import { useEffect, useState } from 'react';
 import Constants from '@constants';
 
+type GameRoomStatus = 'waiting' | 'playing' | 'finished';
+
 interface GameState {
 	// currentGame?: Game;
 	hash?: string;
 	board?: Record<string, string[]>;
-	status?: string;
+	status?: GameRoomStatus;
 	turn?: string;
 	playerX?: Player;
 	playerO?: Player;
@@ -43,6 +45,7 @@ export default function useGameState() {
 		},
 		playerX: undefined,
 		playerO: undefined,
+		status: 'waiting',
 	});
 
 	useEffect(() => {
@@ -57,6 +60,7 @@ export default function useGameState() {
 				},
 				playerX: undefined,
 				playerO: undefined,
+				status: 'waiting',
 			});
 		};
 	}, []);
@@ -109,7 +113,7 @@ export default function useGameState() {
 		}
 	}
 
-	async function _setStatus(status: string, players: Player[]) {
+	async function _setStatus(status: GameRoomStatus, players: Player[]) {
 		setState((current) => ({ ...current, status }));
 		if (players.length === 2) {
 			if (players[0].symbol === 'X') {
@@ -123,7 +127,7 @@ export default function useGameState() {
 	}
 
 	async function _setWinner(
-		status: string,
+		status: GameRoomStatus,
 		winner: string,
 		winningPositions: BoardCells[],
 	) {
@@ -148,6 +152,7 @@ export default function useGameState() {
 			},
 			playerX: undefined,
 			playerO: undefined,
+			status: 'waiting',
 		});
 	}
 
