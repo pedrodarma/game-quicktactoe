@@ -42,14 +42,14 @@ export default function Game() {
 	}
 
 	return (
-		<GameProvider key={'provider' + hash} hash={hash}>
-			<div className="flex flex-col h-dvh px-8 pb-20 gap-1 sm:p-20 sm:pt-10">
+		<div className="flex flex-col h-dvh px-8 pb-20 gap-1 sm:p-20 sm:pt-10">
+			<GameProvider key={'provider' + hash} hash={hash}>
 				<GameHeader />
 				<main className="flex flex-col grow row-start-2 items-center justify-center">
 					<Board key={'board' + hash} />
 				</main>
 				<Footer />
-			</div>
-		</GameProvider>
+			</GameProvider>
+		</div>
 	);
 }

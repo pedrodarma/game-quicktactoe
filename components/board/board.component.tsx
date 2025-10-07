@@ -36,7 +36,9 @@ export function Board() {
 			</div>
 			<div
 				className={`flex flex-col justify-center items-center gap-1 transition-all ${
-					gameState.status === 'waiting' ? 'block scale-190' : 'hidden scale-10'
+					gameState.status === 'waiting'
+						? 'block scale-130 sm:scale-190'
+						: 'hidden scale-10'
 				}`}>
 				<LoadingGame />
 			</div>
