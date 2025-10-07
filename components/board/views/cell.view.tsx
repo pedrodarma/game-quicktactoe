@@ -18,7 +18,7 @@ export function Cell({ value = undefined, onClick, disabled }: Props) {
 
 	return (
 		<div
-			className={`size-40 flex hover:bg-gray-600 justify-center items-center rounded-lg select-none transition-all duration-300
+			className={`size-30 sm:size-40 flex hover:bg-gray-600 justify-center items-center rounded-lg select-none transition-all duration-300
 								 ${
 										gameState.status === 'waiting' ||
 										gameState.status === 'finished'
