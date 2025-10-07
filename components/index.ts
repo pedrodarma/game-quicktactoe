@@ -4,6 +4,9 @@ export * from './header';
 export * from './board';
 export * from './main_menu';
 export * from './loading_game';
-export * from './how-to-play';
+export * from './how_to_play';
 export * from './footer';
 export * from './chat';
+
+export * from './game_local';
+export * from './game_online';

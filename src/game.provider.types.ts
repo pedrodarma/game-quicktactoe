@@ -7,4 +7,5 @@ type WSActions = ReturnType<typeof useWebSocketGameState>[1];
 export interface GameProviderType extends GameActions, WSActions {
 	gameState: ReturnType<typeof useGameState>[0];
 	websocketState: ReturnType<typeof useWebSocketGameState>[0];
+	move: (position: string) => Promise<void>;
 }

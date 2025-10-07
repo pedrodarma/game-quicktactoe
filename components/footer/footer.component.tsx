@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { HowToPlay } from '../how-to-play';
+import { HowToPlay } from '../how_to_play';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { MediumText } from '@design_system';
 

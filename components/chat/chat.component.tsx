@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-// import { StatusView } from './views/connection-status.view';
 
 import { ChatButtonView } from './views/chat-button.view';
 import { ChatHeaderView } from './views/header.view';
@@ -21,18 +20,20 @@ export function Chat() {
 
 	useEffect(() => {
 		setMounted(true);
-		// bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+
 		const timer = setInterval(() => {
 			const _messages = getMessages();
 			if (messages.length === _messages.length) {
 				return;
 			}
 			setMessages(() => _messages.filter((msg) => msg.type === 'chat'));
-			// if (autoScroll) {
+
 			bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-			// }
 		}, 100);
-		return () => clearTimeout(timer);
+		return () => {
+			clearTimeout(timer);
+			setMounted(false);
+		};
 	}, []);
 
 	if (!mounted) return null;

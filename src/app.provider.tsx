@@ -9,17 +9,20 @@ import React, {
 	useState,
 } from 'react';
 import { AppProviderType } from './app.provider.types';
-import { User, WebSocketMessage } from '@models';
+import { GameModes, User, WebSocketMessage } from '@models';
 import { useUserState } from './states/user.state';
 import useWebSocketState from './states/websocket.state';
 import { GameService, UserService } from '@services';
 import { useRouter } from 'next/navigation';
+import { NavigateOptions } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
 export const AppContext = createContext<AppProviderType | undefined>(undefined);
 
 interface Props {
 	children: ReactNode;
 }
+
+const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
 export function AppProvider({ children }: Props) {
 	const _url = `${process.env.NEXT_PUBLIC_API_BROKER}/chat`;
@@ -28,7 +31,7 @@ export function AppProvider({ children }: Props) {
 	//  ╦╔╗╔╦╔╦╗╦╔═╗╦   ╔═╗╔╦╗╔═╗╔╦╗╔═╗╔═╗
 	//  ║║║║║ ║ ║╠═╣║   ╚═╗ ║ ╠═╣ ║ ║╣ ╚═╗
 	//  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝ ╚═╝ ╩ ╩ ╩ ╩ ╚═╝╚═╝
-	const [users, setUsers] = useState<User[]>([]); // Example state
+	const [users, setUsers] = useState<User[]>([]);
 	const [userState, userActions] = useUserState();
 	const [websocketState, websocketActions] = useWebSocketState({
 		url: _url,
@@ -63,23 +66,24 @@ export function AppProvider({ children }: Props) {
 			(message.data?.event === 'user_disconnected' ||
 				message.data?.event === 'new_user')
 		) {
-			// fetch the user list again
 			const users = await UserService.list();
-			// console.log('Fetched users:', { users });
+
 			setUsers(users);
-			// userActions.setUsers(users);
-			// console.log('Updated user list:', users);
 			return;
 		}
-		// console.log('Message received in AppProvider:', message);
 	}
 
-	async function _createGame() {
-		const gameHash = await GameService.create();
-		router.push(`/game#${gameHash}`);
+	async function _createGame(gameMode: GameModes = 'online') {
+		const gameHash = await GameService.create({ gameMode });
 
-		// console.log({ gameHash });
-		// router.push('/game/1234');
+		if (!gameHash) return;
+
+		const options: NavigateOptions = { scroll: false };
+		router.push(`/game#${gameHash}`, options);
+		await delay(100);
+		router.refresh();
+		await delay(400);
+		window?.location.reload();
 	}
 
 	//  ╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗

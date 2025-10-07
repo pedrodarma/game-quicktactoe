@@ -13,7 +13,7 @@ export function MainMenu() {
 			<div className="scale-135">
 				<PrimaryButton
 					onClick={() => {
-						createGame();
+						createGame('online');
 					}}>
 					<div className="mx-8 font-semibold scale-105">
 						<LargeText>Play Now</LargeText>
@@ -23,7 +23,8 @@ export function MainMenu() {
 			<div className="flex flex-col gap-4 items-center">
 				<SecondaryButton
 					onClick={() => {
-						router.push('/game');
+						// router.push('/game/#local_bot');
+						createGame('local_bot');
 					}}>
 					<div className="mx-11 font-semibold">
 						<LargeText>Player vs Bot</LargeText>
@@ -31,7 +32,8 @@ export function MainMenu() {
 				</SecondaryButton>
 				<SecondaryButton
 					onClick={() => {
-						router.push('/game');
+						// router.push('/game/#local_pvp');
+						createGame('local_pvp');
 					}}>
 					<div className="mx-8 font-semibold">
 						<LargeText>Player vs Player</LargeText>

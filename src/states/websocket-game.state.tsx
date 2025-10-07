@@ -31,14 +31,14 @@ const connectionStatus = {
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
 interface Props {
-	url: string;
 	onMessage: (message: WebSocketMessage) => void;
 }
 
-export default function useWebSocketGameState({ url, onMessage }: Props) {
+export default function useWebSocketGameState({ onMessage }: Props) {
 	//  ╔═╗╔╦╗╔═╗╔╦╗╔═╗
 	//  ╚═╗ ║ ╠═╣ ║ ║╣
 	//  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
+	const [url, setUrl] = useState<string>();
 	const state = useRef<WebSocketState>({
 		userId: undefined,
 		ip: undefined,
@@ -54,13 +54,14 @@ export default function useWebSocketGameState({ url, onMessage }: Props) {
 	);
 
 	useEffect(() => {
+		if (!url) return;
 		_initialize();
 
 		const timer = setInterval(() => {
 			_sendMessage(JSON.stringify({ type: 'ping' }));
 		}, 3000);
 		return () => clearInterval(timer);
-	}, []);
+	}, [url]);
 
 	useEffect(() => {
 		if (state.current.status === connectionStatus[ReadyState.UNINSTANTIATED]) {
@@ -125,6 +126,39 @@ export default function useWebSocketGameState({ url, onMessage }: Props) {
 					return;
 				}
 
+				// check duplicated messages
+				const incomingMessage = JSON.parse(event.data) as WebSocketMessage;
+				// check duplicated messages in the last 5 messages
+				if (
+					incomingMessage &&
+					state.current.messages
+						.slice(-3)
+						.find(
+							(msg) => JSON.stringify(msg) === JSON.stringify(incomingMessage),
+						)
+				) {
+					return;
+				}
+				// if (
+				// 	state.current.messages.slice().find(
+				// 		(msg) => JSON.stringify(msg) === JSON.stringify(incomingMessage),
+				// 	)
+				// ) {
+				// 	return;
+				// }
+				// check duplicated last message
+				// incomingMessage &&
+				// if (
+				// 	state.current.lastMessage &&
+				// 	JSON.stringify(state.current.lastMessage) ===
+				// 		JSON.stringify(incomingMessage)
+				// ) {
+				// 	return;
+				// }
+
+				state.current.lastMessage = incomingMessage;
+				state.current.messages = [...state.current.messages, incomingMessage];
+
 				onMessage(JSON.parse(event.data) as WebSocketMessage);
 			};
 
@@ -179,6 +213,23 @@ export default function useWebSocketGameState({ url, onMessage }: Props) {
 		}
 	}
 
+	function _setUrl(newUrl?: string) {
+		if (newUrl && newUrl !== url) {
+			setUrl(newUrl);
+		} else if (!newUrl) {
+			_disconnect();
+			setUrl(undefined);
+			setReadyState(ReadyState.UNINSTANTIATED);
+			state.current = {
+				userId: undefined,
+				ip: undefined,
+				status: connectionStatus[ReadyState.UNINSTANTIATED],
+				messages: [],
+				lastMessage: undefined,
+			};
+		}
+	}
+
 	// ===================================================================
 	// ===================================================================
 	// ===================================================================
@@ -188,6 +239,7 @@ export default function useWebSocketGameState({ url, onMessage }: Props) {
 	//  ╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
 	const _actions_ = {
 		sendMessage: _sendMessage,
+		setUrl: _setUrl,
 	};
 
 	return [state, _actions_] as [typeof state, typeof _actions_];

@@ -6,10 +6,11 @@ import React, {
 	useContext,
 	useEffect,
 	useMemo,
+	useState,
 } from 'react';
 import { GameProviderType } from './game.provider.types';
 import useGameState from './states/game.state';
-import { WebSocketMessage } from '@models';
+import { BoardCells, GameModes, WebSocketMessage } from '@models';
 import useWebSocketGameState from './states/websocket-game.state';
 
 export const GameContext = createContext<GameProviderType | undefined>(
@@ -18,21 +19,33 @@ export const GameContext = createContext<GameProviderType | undefined>(
 
 interface Props {
 	hash: string;
-	userId: string;
 	children: ReactNode;
 }
 
-export function GameProvider({ userId, hash, children }: Props) {
+export function GameProvider({ hash, children }: Props) {
 	const _url = `${process.env.NEXT_PUBLIC_API_BROKER}/game/`;
-	// console.log('GameProvider initialized with hash:', { hash });
+
 	//  ╦╔╗╔╦╔╦╗╦╔═╗╦   ╔═╗╔╦╗╔═╗╔╦╗╔═╗╔═╗
 	//  ║║║║║ ║ ║╠═╣║   ╚═╗ ║ ╠═╣ ║ ║╣ ╚═╗
 	//  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝ ╚═╝ ╩ ╩ ╩ ╩ ╚═╝╚═╝
+	// const [_hash, setHash] = useState<string>();
 	const [gameState, gameActions] = useGameState();
 	const [websocketState, websocketActions] = useWebSocketGameState({
-		url: `${_url}${hash}`,
+		// url: `${_url}${_hash}`,
 		onMessage: _handleMessages,
 	});
+
+	useEffect(() => {
+		if (!hash || hash.length === 0) return;
+
+		websocketActions.setUrl(`${_url}${hash}`);
+		gameActions.setHash(hash);
+
+		return () => {
+			gameActions.cleanState();
+			websocketActions.setUrl();
+		};
+	}, [hash]);
 
 	//  ╔═╗╔╦╗╔═╗╔╦╗╔═╗╔═╗
 	//  ╚═╗ ║ ╠═╣ ║ ║╣ ╚═╗
@@ -42,13 +55,8 @@ export function GameProvider({ userId, hash, children }: Props) {
 		websocketState,
 	};
 
-	useEffect(() => {
-		//
-	}, []);
-
 	async function _handleMessages(message: WebSocketMessage) {
-		// Handle the message as needed
-		console.log('Message received in GameProvider:', message);
+		// console.log('Message received in GameProvider:', message);
 
 		if (message.type === 'registered') {
 			const userId = message.data?.id;
@@ -70,13 +78,52 @@ export function GameProvider({ userId, hash, children }: Props) {
 			// console.log('Updated user list:', users);
 			return;
 		}
+		if (message.type === 'event' && message.data?.event === 'join') {
+			gameActions.setPlayer(
+				message.from,
+				message.data?.symbol as 'X' | 'O',
+				message.data?.name as string,
+			);
+			return;
+		}
+		if (message.type === 'event' && message.data?.event === 'start') {
+			gameActions.setStatus('playing', message.data?.players as any);
+			return;
+		}
+		if (message.type === 'event' && message.data?.event === 'your_turn') {
+			gameActions.setTurn(message.to as string);
+			return;
+		}
+		if (message.type === 'event' && message.data?.event === 'game_over') {
+			gameActions.setWinner(
+				'game_over',
+				message.data?.winner as string,
+				message.data?.winningPositions as BoardCells[],
+			);
+			return;
+		}
+
+		// ACTIONS
+		if (message.type === 'action' && message.data?.action === 'move') {
+			gameActions.playMove(
+				message.from,
+				message.data?.position as string,
+				message.data?.symbol as 'X' | 'O',
+			);
+			// gameActions.setWinner('game_over', message.data?.winner as string);
+			return;
+		}
+
+		return;
 		// console.log('Message received in AppProvider:', message);
 	}
 
-	async function _playMove(position: string) {
+	async function _move(position: string): Promise<void> {
+		// if (!isLocal) {
 		const message = {
 			type: 'action',
-			from: userId,
+			from: gameState.turn,
+			// from: userId,
 			to: hash,
 			data: {
 				action: 'move',
@@ -85,7 +132,7 @@ export function GameProvider({ userId, hash, children }: Props) {
 		};
 		await websocketActions.sendMessage(JSON.stringify(message));
 
-		return gameActions.playMove(position);
+		// await gameActions.playMove(position);
 	}
 
 	//  ╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
@@ -94,7 +141,7 @@ export function GameProvider({ userId, hash, children }: Props) {
 	const AppActions = {
 		...gameActions,
 		...websocketActions,
-		playMove: _playMove,
+		move: _move,
 	};
 
 	return useMemo(() => {

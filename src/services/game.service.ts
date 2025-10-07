@@ -1,12 +1,16 @@
 import Constants from '@constants';
-import { Game } from '@models';
+import { Game, GameModes } from '@models';
 
 export const GameService = {
 	create: _create,
 	listLive: _listLive,
 };
 
-async function _create(): Promise<string> {
+interface Props {
+	gameMode?: GameModes;
+}
+
+async function _create({ gameMode = 'online' }: Props): Promise<string> {
 	try {
 		const data = await fetch(`${Constants.API}/game/create`, {
 			method: 'POST',
@@ -15,6 +19,7 @@ async function _create(): Promise<string> {
 			},
 			body: JSON.stringify({
 				gameId: 'QTT',
+				gameMode,
 			}),
 		});
 
