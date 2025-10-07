@@ -19,17 +19,17 @@ interface GameState {
 	// board: Constants.cleanBoard;
 }
 
-interface Player {
+export interface Player {
 	id: string;
 	name?: string;
 	symbol: 'X' | 'O';
 	// moves: BoardCells[];
 }
 
-interface Props {
-	// isLocal: boolean;
-	// hash: string;
-}
+// interface Props {
+// 	// isLocal: boolean;
+// 	// hash: string;
+// }
 
 export default function useGameState() {
 	//  ╔═╗╔╦╗╔═╗╔╦╗╔═╗
@@ -71,7 +71,7 @@ export default function useGameState() {
 
 	async function _playMove(playerId: string, position: string, symbol: string) {
 		if (state.winner) {
-			console.warn('Game over, no more moves allowed');
+			// console.warn('Game over, no more moves allowed');
 			return;
 		}
 		// if (state.turn !== playerId) {
@@ -131,7 +131,7 @@ export default function useGameState() {
 		setState((current) => ({
 			...current,
 			status,
-			winner: winner as any,
+			winner: winner,
 			winningPositions,
 		}));
 	}

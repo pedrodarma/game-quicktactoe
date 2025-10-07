@@ -9,7 +9,7 @@ import React, {
 	useState,
 } from 'react';
 import { GameProviderType } from './game.provider.types';
-import useGameState from './states/game.state';
+import useGameState, { Player } from './states/game.state';
 import { BoardCells, GameModes, WebSocketMessage } from '@models';
 import useWebSocketGameState from './states/websocket-game.state';
 
@@ -87,7 +87,7 @@ export function GameProvider({ hash, children }: Props) {
 			return;
 		}
 		if (message.type === 'event' && message.data?.event === 'start') {
-			gameActions.setStatus('playing', message.data?.players as any);
+			gameActions.setStatus('playing', message.data?.players as Player[]);
 			return;
 		}
 		if (message.type === 'event' && message.data?.event === 'your_turn') {

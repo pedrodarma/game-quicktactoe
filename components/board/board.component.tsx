@@ -4,17 +4,16 @@ import { useAppContext, useGameContext } from '@providers';
 import { Cell } from './views/cell.view';
 import { BoardHeader } from './views/header.view';
 import { LargeText, PrimaryButton } from '@design_system';
+import { BoardCells } from '@models';
 
 export function Board() {
 	const { createGame } = useAppContext();
-	const { gameState, move, cleanState } = useGameContext();
+	const { gameState, move } = useGameContext();
 
 	const hasWinner = gameState.winner !== undefined;
 
-	function isDisabled(cell: string): boolean {
-		return (
-			hasWinner && !(gameState.winningPositions?.includes(cell as any) ?? false)
-		);
+	function isDisabled(cell: BoardCells): boolean {
+		return hasWinner && !(gameState.winningPositions?.includes(cell) ?? false);
 	}
 
 	return (

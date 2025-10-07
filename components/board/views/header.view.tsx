@@ -1,4 +1,4 @@
-import { LargeText, SmallTitle } from '@design_system';
+import { SmallTitle } from '@design_system';
 import { faO } from '@fortawesome/free-solid-svg-icons/faO';
 import { faXmark } from '@fortawesome/free-solid-svg-icons/faXmark';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,10 +8,10 @@ export function BoardHeader() {
 	const { gameState } = useGameContext();
 
 	const hasWinner = gameState.winner !== undefined;
-	const isPlayerXWinner =
-		hasWinner && gameState.winner === gameState.playerX?.id;
-	const isPlayerOWinner =
-		hasWinner && gameState.winner === gameState.playerO?.id;
+	// const isPlayerXWinner =
+	// 	hasWinner && gameState.winner === gameState.playerX?.id;
+	// const isPlayerOWinner =
+	// 	hasWinner && gameState.winner === gameState.playerO?.id;
 
 	// const _commonStyle = `fa-lg transition-all duration-300 ${
 
