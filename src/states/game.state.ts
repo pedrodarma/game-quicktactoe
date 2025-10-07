@@ -36,7 +36,11 @@ export default function useGameState() {
 	//  ╚═╗ ║ ╠═╣ ║ ║╣
 	//  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
 	const [state, setState] = useState<GameState>({
-		board: undefined,
+		board: {
+			a: ['-', '-', '-'],
+			b: ['-', '-', '-'],
+			c: ['-', '-', '-'],
+		},
 		playerX: undefined,
 		playerO: undefined,
 	});
@@ -46,7 +50,11 @@ export default function useGameState() {
 
 		return () => {
 			setState({
-				board: undefined,
+				board: {
+					a: ['-', '-', '-'],
+					b: ['-', '-', '-'],
+					c: ['-', '-', '-'],
+				},
 				playerX: undefined,
 				playerO: undefined,
 			});
@@ -58,15 +66,6 @@ export default function useGameState() {
 	//  ╩  ╩╚═╩╚╝ ╩ ╩ ╩ ╚═╝
 	async function _initialize() {
 		// _cleanState();
-	}
-
-	async function _create(gameMode: GameModes = 'online'): Promise<string> {
-		try {
-			const gameId = await GameService.create({ gameMode });
-			return gameId;
-		} catch (error) {
-			throw error;
-		}
 	}
 
 	async function _playMove(playerId: string, position: string, symbol: string) {
