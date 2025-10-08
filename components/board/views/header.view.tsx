@@ -34,8 +34,7 @@ export function BoardHeader() {
 							: ''
 					} `}>
 					<SmallTitle>
-						Player{' '}
-						<FontAwesomeIcon icon={faXmark} className="fa-lg text-white" />
+						Player <FontAwesomeIcon icon={faXmark} className="fa-lg" />
 					</SmallTitle>
 
 					<small>{!gameState.isLocal ? '(you)' : ''}</small>
@@ -50,7 +49,7 @@ export function BoardHeader() {
 							: ''
 					} `}>
 					<SmallTitle>
-						Player <FontAwesomeIcon icon={faO} className="fa-lg text-white" />
+						Player <FontAwesomeIcon icon={faO} className="fa-lg" />
 					</SmallTitle>
 
 					<small>{!gameState.isLocal ? '(opponent)' : ''}</small>

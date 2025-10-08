@@ -7,15 +7,16 @@ export const tailwindcss = {
 	theme: {
 		extend: {
 			colors: {
-				background: 'red',
-				foreground: 'var(--foreground)',
+				// background: 'red',
+				// foreground: 'var(--foreground)',
 			},
 			fontFamily: {
-				sans: ['var(--font-sans)', 'Arial', 'sans-serif'],
-				mono: ['var(--font-mono)', 'monospace'],
+				// sans: ['var(--font-sans)', 'Arial', 'sans-serif'],
+				// mono: ['var(--font-mono)', 'monospace'],
 			},
 		},
 	},
+	// darkMode: 'class', // ou 'class' se quiser controlar manualmente
 	darkMode: 'media', // ou 'class' se quiser controlar manualmente
 };
 export default tailwindcss;

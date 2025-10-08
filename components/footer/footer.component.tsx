@@ -5,7 +5,7 @@ import { MediumText } from '@design_system';
 
 export function Footer() {
 	return (
-		<footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-between w-full max-w-lg mx-auto">
+		<footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-between w-full max-w-lg mx-auto z-1">
 			<HowToPlay />
 
 			<a

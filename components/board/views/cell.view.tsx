@@ -14,18 +14,18 @@ export function Cell({ value = undefined, onClick, disabled }: Props) {
 
 	const hasWinner = gameState.winner !== undefined;
 
-	const _textColor = disabled ? 'text-gray-400 opacity-60 ' : 'text-white ';
+	const _textColor = disabled ? 'text-white opacity-100 ' : 'text-white ';
 
 	return (
 		<div
-			className={`size-30 sm:size-40 flex hover:bg-gray-600 justify-center items-center rounded-lg select-none transition-all duration-300
+			className={`size-30 sm:size-40 flex justify-center items-center rounded-lg select-none transition-all duration-300
 								 ${
 										gameState.status === 'waiting' ||
 										gameState.status === 'finished'
-											? 'cursor-not-allowed bg-black opacity-30'
+											? 'cursor-not-allowed bg-gray-400 hover:bg-gray-500 opacity-40'
 											: gameState.turn === userState?.id
-											? 'cursor-pointer bg-gray-900'
-											: 'cursor-progress bg-gray-900 opacity-70'
+											? 'cursor-pointer bg-gray-600 hover:bg-gray-700'
+											: 'cursor-progress bg-gray-500 hover:bg-gray-500 opacity-70'
 									}`}
 			onClick={() => {
 				if (disabled || hasWinner) return;

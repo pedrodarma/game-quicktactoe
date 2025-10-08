@@ -6,7 +6,6 @@ import { Chat } from '@components';
 export const metadata: Metadata = {
 	title: 'QuickTactoe',
 	description: 'Play Tic Tac Toe with friends online. Fast, fun, and free!',
-	themeColor: '#00ffff',
 
 	icons: {
 		icon: '/icons/icon-192x192.png',
@@ -45,7 +44,7 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en">
+		<html lang="en" className={'dark'}>
 			<head>
 				<link rel="manifest" href="/manifest.json" />
 				<link
@@ -54,26 +53,11 @@ export default function RootLayout({
 					href="/icons/apple-touch-icon.png"
 				/>
 				<meta name="mobile-web-app-capable" content="yes" />
-				{/* <meta name="theme-color" content="#00ffff" />
-				<meta property="og:title" content="QuickTacToe" />
-				<meta
-					property="og:description"
-					content="Play Tic Tac Toe with friends online. Fast, fun, and free!"
-				/>
-				<meta
-					property="og:image"
-					content="https://game-quicktactoe.vercel.app/assets/preview.png"
-				/>
-				<meta
-					property="og:url"
-					content="https://game-quicktactoe.vercel.app/assets/preview.png"
-				/>
-				<meta name="twitter:card" content="summary_large_image" /> */}
 			</head>
-			<body className={` antialiased font-sans h-dvh`}>
+			<body
+				className={`antialiased font-sans h-dvh transition-all duration-500`}>
 				<AppProvider>
 					{children}
-					{/* chat button */}
 					<Chat />
 				</AppProvider>
 			</body>
