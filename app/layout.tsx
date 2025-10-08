@@ -24,6 +24,20 @@ export default function RootLayout({
 				/>
 				<meta name="mobile-web-app-capable" content="yes" />
 				<meta name="theme-color" content="#00ffff" />
+				<meta property="og:title" content="QuickTacToe" />
+				<meta
+					property="og:description"
+					content="Play Tic Tac Toe with friends online. Fast, fun, and free!"
+				/>
+				<meta
+					property="og:image"
+					content="https://game-quicktactoe.vercel.app/assets/globe.svg"
+				/>
+				<meta
+					property="og:url"
+					content="https://game-quicktactoe.vercel.app/assets/globe.svg"
+				/>
+				<meta name="twitter:card" content="summary_large_image" />
 			</head>
 			<body className={` antialiased font-sans h-dvh`}>
 				<AppProvider>
