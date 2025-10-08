@@ -8,13 +8,13 @@ import { useEffect } from 'react';
 export function GameHeader() {
 	useEffect(() => {
 		const savedTheme = localStorage.getItem('theme');
-		const isDark = document.documentElement.classList.contains('dark');
+		const isDark = document?.documentElement.classList.contains('dark');
 		if (savedTheme === 'dark' || (!savedTheme && isDark)) {
-			document.documentElement.classList.add('dark');
+			document?.documentElement.classList.add('dark');
 			// document.body.classList.add('dark');
 			// document.body.classList.remove('light');
 		} else if (savedTheme === 'light') {
-			document.documentElement.classList.remove('dark');
+			document?.documentElement.classList.remove('dark');
 			// document.body.classList.remove('dark');
 			// document.body.classList.add('light');
 		}
@@ -46,15 +46,15 @@ export function GameHeader() {
 						className="peer hidden"
 						id="toggle"
 						type="checkbox"
-						value={
-							document.documentElement.classList.contains('dark')
-								? 'checked'
-								: ''
-						}
+						// value={
+						// 	document?.documentElement.classList.contains('dark')
+						// 		? 'checked'
+						// 		: ''
+						// }
 						onChange={(e) => {
 							const isDark = e.target.checked;
 							localStorage.setItem('theme', isDark ? 'dark' : 'light');
-							document.documentElement.classList.toggle('dark');
+							document?.documentElement.classList.toggle('dark');
 						}}
 					/>
 					<div className="relative w-[110px] h-[50px] bg-white peer-checked:bg-zinc-500 rounded-full after:absolute after:content-[''] after:w-[40px] after:h-[40px] after:bg-gradient-to-r from-orange-500 to-yellow-400 peer-checked:after:from-zinc-900 peer-checked:after:to-zinc-900 after:rounded-full after:top-[5px] after:left-[5px] active:after:w-[50px] peer-checked:after:left-[105px] peer-checked:after:translate-x-[-100%] shadow-sm duration-300 after:duration-300 after:shadow-md"></div>
