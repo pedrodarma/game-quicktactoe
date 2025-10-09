@@ -7,3 +7,4 @@ export * from './loading_game';
 export * from './how_to_play';
 export * from './footer';
 export * from './chat';
+export * from './progress_bar';

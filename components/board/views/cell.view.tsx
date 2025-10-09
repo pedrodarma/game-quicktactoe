@@ -31,8 +31,12 @@ export function Cell({ value = undefined, onClick, disabled }: Props) {
 				if (disabled || hasWinner) return;
 				if (gameState.status === 'waiting') return;
 				if (gameState.status === 'finished') return;
-				if (gameState.turn !== userState?.id) return;
-				onClick();
+				if (
+					gameState.turn === userState?.id ||
+					gameState.turn === `pvp_${userState?.id}`
+				) {
+					onClick();
+				}
 			}}>
 			{value?.replace('-', '').toLowerCase() === 'x' && (
 				<FontAwesomeIcon

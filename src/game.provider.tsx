@@ -6,12 +6,12 @@ import React, {
 	useContext,
 	useEffect,
 	useMemo,
-	useState,
 } from 'react';
 import { GameProviderType } from './game.provider.types';
 import useGameState, { Player } from './states/game.state';
-import { BoardCells, GameModes, WebSocketMessage } from '@models';
+import { BoardCells, WebSocketMessage } from '@models';
 import useWebSocketGameState from './states/websocket-game.state';
+import { useAppContext } from './app.provider';
 
 export const GameContext = createContext<GameProviderType | undefined>(
 	undefined,
@@ -25,13 +25,13 @@ interface Props {
 export function GameProvider({ hash, children }: Props) {
 	const _url = `${process.env.NEXT_PUBLIC_API_BROKER}/game/`;
 
+	const { userState } = useAppContext();
+
 	//  ╦╔╗╔╦╔╦╗╦╔═╗╦   ╔═╗╔╦╗╔═╗╔╦╗╔═╗╔═╗
 	//  ║║║║║ ║ ║╠═╣║   ╚═╗ ║ ╠═╣ ║ ║╣ ╚═╗
 	//  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝ ╚═╝ ╩ ╩ ╩ ╩ ╚═╝╚═╝
-	// const [_hash, setHash] = useState<string>();
 	const [gameState, gameActions] = useGameState();
 	const [websocketState, websocketActions] = useWebSocketGameState({
-		// url: `${_url}${_hash}`,
 		onMessage: _handleMessages,
 	});
 
@@ -56,12 +56,10 @@ export function GameProvider({ hash, children }: Props) {
 	};
 
 	async function _handleMessages(message: WebSocketMessage) {
-		// console.log('Message received in GameProvider:', message);
-
 		if (message.type === 'registered') {
 			const userId = message.data?.id;
 			if (typeof userId === 'string') {
-				// userActions.register(userId);
+				//
 			}
 			return;
 		}
@@ -70,12 +68,6 @@ export function GameProvider({ hash, children }: Props) {
 			(message.data?.event === 'user_disconnected' ||
 				message.data?.event === 'new_user')
 		) {
-			// fetch the user list again
-			// const users = await UserService.list();
-			// console.log('Fetched users:', { users });
-			// setUsers(users);
-			// userActions.setUsers(users);
-			// console.log('Updated user list:', users);
 			return;
 		}
 		if (message.type === 'event' && message.data?.event === 'join') {
@@ -97,9 +89,13 @@ export function GameProvider({ hash, children }: Props) {
 		if (message.type === 'event' && message.data?.event === 'game_over') {
 			gameActions.setWinner(
 				'finished',
-				message.data?.winner as string,
-				message.data?.winningPositions as BoardCells[],
+				message.data?.winner as string | undefined,
+				message.data?.winningPositions as BoardCells[] | undefined,
 			);
+			return;
+		}
+		if (message.type === 'event' && message.data?.event === 'timeout') {
+			gameActions.setTimeout();
 			return;
 		}
 
@@ -110,29 +106,45 @@ export function GameProvider({ hash, children }: Props) {
 				message.data?.position as string,
 				message.data?.symbol as 'X' | 'O',
 			);
-			// gameActions.setWinner('game_over', message.data?.winner as string);
 			return;
 		}
 
 		return;
-		// console.log('Message received in AppProvider:', message);
 	}
 
 	async function _move(position: string): Promise<void> {
-		// if (!isLocal) {
+		const hasWinner = gameState.winner !== undefined;
+		if (hasWinner) return;
+		if (gameState.status === 'waiting') return;
+		if (gameState.status === 'finished') return;
+		if (
+			gameState.turn === userState?.id ||
+			gameState.turn === `pvp_${userState?.id}`
+		) {
+			const message = {
+				type: 'action',
+				from: gameState.turn,
+				to: hash,
+				data: {
+					action: 'move',
+					position: position,
+				},
+			};
+			await websocketActions.sendMessage(JSON.stringify(message));
+		}
+	}
+
+	async function _timeout() {
 		const message = {
-			type: 'action',
-			from: gameState.turn,
-			// from: userId,
+			type: 'event',
+			from: userState?.id,
 			to: hash,
 			data: {
-				action: 'move',
-				position: position,
+				event: 'timeout',
+				timestamp: Date.now(),
 			},
 		};
 		await websocketActions.sendMessage(JSON.stringify(message));
-
-		// await gameActions.playMove(position);
 	}
 
 	//  ╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
@@ -142,15 +154,16 @@ export function GameProvider({ hash, children }: Props) {
 		...gameActions,
 		...websocketActions,
 		move: _move,
+		timeout: _timeout,
 	};
 
-	return useMemo(() => {
-		return (
-			<GameContext.Provider value={{ ...AppStates, ...AppActions }}>
-				{children}
-			</GameContext.Provider>
-		);
-	}, [hash, AppActions, AppStates]);
+	// return useMemo(() => {
+	return (
+		<GameContext.Provider value={{ ...AppStates, ...AppActions }}>
+			{children}
+		</GameContext.Provider>
+	);
+	// }, [hash, AppActions, AppStates]);
 }
 
 export function useGameContext() {

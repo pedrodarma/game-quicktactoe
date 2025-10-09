@@ -6,12 +6,14 @@ import { BoardHeader } from './views/header.view';
 import { LargeText, PrimaryButton } from '@design_system';
 import { BoardCells } from '@models';
 import { LoadingGame } from '@components';
+import ProgressBar from '../progress_bar/progress-bar.component';
 
 export function Board() {
 	const { createGame } = useAppContext();
-	const { gameState, move } = useGameContext();
+	const { gameState, move, timeout, cleanState } = useGameContext();
 
 	const hasWinner = gameState.winner !== undefined;
+	const isGameRunning = gameState.status === 'playing';
 
 	function isDisabled(cell: BoardCells): boolean {
 		return hasWinner && !(gameState.winningPositions?.includes(cell) ?? false);
@@ -21,9 +23,14 @@ export function Board() {
 		<>
 			<div
 				className={`flex flex-col justify-center items-center gap-1 transition-all ${
-					hasWinner ? 'block scale-190' : 'hidden scale-50'
+					gameState.status === 'finished' || hasWinner
+						? 'block scale-240'
+						: 'hidden scale-50'
 				}`}>
 				<LargeText>Game Over</LargeText>
+				{gameState.timeout && (
+					<LargeText>{gameState.timeout ? 'Time Out!' : ''}</LargeText>
+				)}
 				<LargeText>
 					{gameState.winner === 'draw'
 						? "It's a Draw!"
@@ -44,11 +51,11 @@ export function Board() {
 			</div>
 			<div
 				className={`container flex flex-col justify-center items-center gap-8 h-100 transition-all ${
-					gameState.status === 'waiting' || hasWinner
-						? 'scale-40'
+					gameState.status !== 'playing' || hasWinner
+						? 'scale-30'
 						: 'opacity-100'
 				} `}>
-				{/* <div className="scale-70">{JSON.stringify(gameState)}</div> */}
+				{/* <div className="scale-170">{JSON.stringify(gameState)}</div> */}
 				<BoardHeader />
 
 				{/* <div className={hasWinner ? styles.disabledBoard : styles.board}> */}
@@ -106,19 +113,29 @@ export function Board() {
 						/>
 					</div>
 				</div>
+				{isGameRunning && (
+					<ProgressBar
+						duration={10}
+						onFinish={() => {
+							timeout();
+						}}
+					/>
+				)}
 			</div>
 			<div
 				className={`flex flex-col justify-center items-center gap-1 transition-all ${
-					hasWinner ? 'block scale-150' : 'hidden scale-50'
+					gameState.status === 'finished' || hasWinner
+						? 'block scale-150'
+						: 'hidden scale-50'
 				}`}>
 				<PrimaryButton
 					onClick={() => {
-						// cleanState();
 						const gameMode = gameState.hash?.includes('bot_')
 							? 'local_bot'
 							: gameState.hash?.includes('pvp_')
 							? 'local_pvp'
 							: 'online';
+						cleanState();
 						createGame(gameMode);
 					}}>
 					Play Again

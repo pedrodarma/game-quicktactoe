@@ -14,6 +14,7 @@ import { useUserState } from './states/user.state';
 import useWebSocketState from './states/websocket.state';
 import { GameService, UserService } from '@services';
 import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/compat/router';
 import { NavigateOptions } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
 export const AppContext = createContext<AppProviderType | undefined>(undefined);
@@ -78,12 +79,10 @@ export function AppProvider({ children }: Props) {
 
 		if (!gameHash) return;
 
-		const options: NavigateOptions = { scroll: false };
-		router.push(`/game#${gameHash}`, options);
+		router?.push(`/game#${gameHash}`, {});
 		await delay(100);
-		router.refresh();
-		await delay(400);
-		window?.location.reload();
+
+		router?.refresh();
 	}
 
 	//  ╔═╗╔═╗╔╦╗╦╔═╗╔╗╔╔═╗

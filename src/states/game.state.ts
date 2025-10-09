@@ -1,14 +1,11 @@
 'use client';
 
-import { BoardCells, GameModes, Turn } from '@models';
-import { GameService } from '@services';
+import { BoardCells } from '@models';
 import { useEffect, useState } from 'react';
-import Constants from '@constants';
 
 type GameRoomStatus = 'waiting' | 'playing' | 'finished';
 
 interface GameState {
-	// currentGame?: Game;
 	hash?: string;
 	board?: Record<string, string[]>;
 	status?: GameRoomStatus;
@@ -16,22 +13,15 @@ interface GameState {
 	playerX?: Player;
 	playerO?: Player;
 	winner?: string;
-	isLocal?: boolean;
 	winningPositions?: BoardCells[];
-	// board: Constants.cleanBoard;
+	timeout?: boolean;
 }
 
 export interface Player {
 	id: string;
 	name?: string;
 	symbol: 'X' | 'O';
-	// moves: BoardCells[];
 }
-
-// interface Props {
-// 	// isLocal: boolean;
-// 	// hash: string;
-// }
 
 export default function useGameState() {
 	//  ╔═╗╔╦╗╔═╗╔╦╗╔═╗
@@ -128,8 +118,8 @@ export default function useGameState() {
 
 	async function _setWinner(
 		status: GameRoomStatus,
-		winner: string,
-		winningPositions: BoardCells[],
+		winner?: string,
+		winningPositions?: BoardCells[],
 	) {
 		setState((current) => ({
 			...current,
@@ -143,8 +133,13 @@ export default function useGameState() {
 		setState((current) => ({ ...current, turn: playerId }));
 	}
 
+	async function _setTimeout() {
+		setState((current) => ({ ...current, timeout: true, status: 'finished' }));
+	}
+
 	async function _cleanState() {
 		setState({
+			// hash: undefined,
 			board: {
 				a: ['-', '-', '-'],
 				b: ['-', '-', '-'],
@@ -153,6 +148,10 @@ export default function useGameState() {
 			playerX: undefined,
 			playerO: undefined,
 			status: 'waiting',
+			winner: undefined,
+			turn: undefined,
+			winningPositions: undefined,
+			timeout: undefined,
 		});
 	}
 
@@ -170,6 +169,7 @@ export default function useGameState() {
 		setTurn: _setTurn,
 		setStatus: _setStatus,
 		setWinner: _setWinner,
+		setTimeout: _setTimeout,
 		cleanState: _cleanState,
 	};
 
