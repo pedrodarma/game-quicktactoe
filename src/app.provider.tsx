@@ -15,7 +15,6 @@ import useWebSocketState from './states/websocket.state';
 import { GameService, UserService } from '@services';
 import { useRouter } from 'next/navigation';
 // import { useRouter } from 'next/compat/router';
-import { NavigateOptions } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
 export const AppContext = createContext<AppProviderType | undefined>(undefined);
 
