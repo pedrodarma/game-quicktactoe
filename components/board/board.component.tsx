@@ -40,7 +40,7 @@ export function Board() {
 					{Object.keys(gameState.board ?? {}).map((key) => {
 						return (
 							<div key={key} className={`flex flex-row gap-1`}>
-								{(gameState.board as any)[key].map(
+								{(gameState.board as Record<string, string[]>)[key].map(
 									(value: string, index: number) => {
 										const cellKey = `${key}${index}` as BoardCells;
 										return (
