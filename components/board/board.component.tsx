@@ -1,16 +1,16 @@
 'use client';
 
-import { useAppContext, useGameContext } from '@providers';
+import { useGameContext } from '@providers';
 import { Cell } from './views/cell.view';
 import { BoardHeader } from './views/header.view';
-import { LargeText, PrimaryButton } from '@design_system';
 import { BoardCells } from '@models';
 import { LoadingGame } from '@components';
 import ProgressBar from '../progress_bar/progress-bar.component';
+import { GameOver } from './views/game-over.view';
+import { PlayAgain } from './views/play-again.view';
 
 export function Board() {
-	const { createGame } = useAppContext();
-	const { gameState, move, timeout, cleanState } = useGameContext();
+	const { gameState, move, timeout } = useGameContext();
 
 	const hasWinner = gameState.winner !== undefined;
 	const isGameRunning = gameState.status === 'playing';
@@ -19,128 +19,47 @@ export function Board() {
 		return hasWinner && !(gameState.winningPositions?.includes(cell) ?? false);
 	}
 
+	const _styleLoading =
+		gameState.status === 'waiting' ? 'block scale-130 sm:scale-190' : 'hidden';
+	const _styleBoard =
+		gameState.status !== 'playing' || hasWinner ? 'scale-30' : 'opacity-100';
+
 	return (
 		<>
+			<GameOver />
 			<div
-				className={`flex flex-col justify-center items-center gap-1 transition-all ${
-					gameState.status === 'finished' || hasWinner
-						? 'block scale-240'
-						: 'hidden scale-50'
-				}`}>
-				<LargeText>Game Over</LargeText>
-				{gameState.timeout && (
-					<LargeText>{gameState.timeout ? 'Time Out!' : ''}</LargeText>
-				)}
-				<LargeText>
-					{gameState.winner === 'draw'
-						? "It's a Draw!"
-						: gameState.winner === gameState.playerX?.id
-						? 'Player X Wins!'
-						: gameState.winner === gameState.playerO?.id
-						? 'Player O Wins!'
-						: ''}
-				</LargeText>
-			</div>
-			<div
-				className={`flex flex-col justify-center items-center gap-1 transition-all ${
-					gameState.status === 'waiting'
-						? 'block scale-130 sm:scale-190'
-						: 'hidden scale-10'
-				}`}>
+				className={`flex flex-col justify-center items-center gap-1 transition-all ${_styleLoading}`}>
 				<LoadingGame />
 			</div>
 			<div
-				className={`container flex flex-col justify-center items-center gap-8 h-100 transition-all ${
-					gameState.status !== 'playing' || hasWinner
-						? 'scale-30'
-						: 'opacity-100'
-				} `}>
+				className={`container flex flex-col justify-center items-center gap-8 h-100 transition-all ${_styleBoard} `}>
 				{/* <div className="scale-170">{JSON.stringify(gameState)}</div> */}
 				<BoardHeader />
 
-				{/* <div className={hasWinner ? styles.disabledBoard : styles.board}> */}
 				<div className={`flex flex-col gap-1 bg-gray-800 p-1 rounded-lg `}>
-					{/* <div className={styles.row}> */}
-					<div className={`flex flex-row gap-1`}>
-						<Cell
-							value={gameState.board?.a[0]}
-							onClick={() => move('a0')}
-							disabled={isDisabled('a0')}
-						/>
-						<Cell
-							value={gameState.board?.a[1]}
-							onClick={() => move('a1')}
-							disabled={isDisabled('a1')}
-						/>
-						<Cell
-							value={gameState.board?.a[2]}
-							onClick={() => move('a2')}
-							disabled={isDisabled('a2')}
-						/>
-					</div>
-					<div className={`flex flex-row gap-1`}>
-						<Cell
-							value={gameState.board?.b[0]}
-							onClick={() => move('b0')}
-							disabled={isDisabled('b0')}
-						/>
-						<Cell
-							value={gameState.board?.b[1]}
-							onClick={() => move('b1')}
-							disabled={isDisabled('b1')}
-						/>
-						<Cell
-							value={gameState.board?.b[2]}
-							onClick={() => move('b2')}
-							disabled={isDisabled('b2')}
-						/>
-					</div>
-					<div className={`flex flex-row gap-1`}>
-						<Cell
-							value={gameState.board?.c[0]}
-							onClick={() => move('c0')}
-							disabled={isDisabled('c0')}
-						/>
-						<Cell
-							value={gameState.board?.c[1]}
-							onClick={() => move('c1')}
-							disabled={isDisabled('c1')}
-						/>
-						<Cell
-							value={gameState.board?.c[2]}
-							onClick={() => move('c2')}
-							disabled={isDisabled('c2')}
-						/>
-					</div>
+					{Object.keys(gameState.board ?? {}).map((key) => {
+						return (
+							<div key={key} className={`flex flex-row gap-1`}>
+								{(gameState.board as any)[key].map(
+									(value: string, index: number) => {
+										const cellKey = `${key}${index}` as BoardCells;
+										return (
+											<Cell
+												key={cellKey}
+												value={value}
+												onClick={() => move(cellKey)}
+												disabled={isDisabled(cellKey)}
+											/>
+										);
+									},
+								)}
+							</div>
+						);
+					})}
 				</div>
-				{isGameRunning && (
-					<ProgressBar
-						duration={10}
-						onFinish={() => {
-							timeout();
-						}}
-					/>
-				)}
+				{isGameRunning && <ProgressBar duration={10} onFinish={timeout} />}
 			</div>
-			<div
-				className={`flex flex-col justify-center items-center gap-1 transition-all ${
-					gameState.status === 'finished' || hasWinner
-						? 'block scale-150'
-						: 'hidden scale-50'
-				}`}>
-				<PrimaryButton
-					onClick={() => {
-						const gameMode = gameState.hash?.includes('bot_')
-							? 'local_bot'
-							: gameState.hash?.includes('pvp_')
-							? 'local_pvp'
-							: 'online';
-						cleanState();
-						createGame(gameMode);
-					}}>
-					Play Again
-				</PrimaryButton>
-			</div>
+			<PlayAgain />
 		</>
 	);
 }

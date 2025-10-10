@@ -119,7 +119,7 @@ export function GameProvider({ hash, children }: Props) {
 		if (gameState.status === 'finished') return;
 		if (
 			gameState.turn === userState?.id ||
-			gameState.turn === `pvp_${userState?.id}`
+			gameState.turn === `p2_${userState?.id}`
 		) {
 			const message = {
 				type: 'action',

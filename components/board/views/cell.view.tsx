@@ -20,20 +20,20 @@ export function Cell({ value = undefined, onClick, disabled }: Props) {
 		<div
 			className={`size-30 sm:size-40 flex justify-center items-center rounded-lg select-none transition-all duration-300
 								 ${
-										gameState.status === 'waiting' ||
-										gameState.status === 'finished'
+										gameState.status !== 'playing'
 											? 'cursor-not-allowed bg-gray-400 hover:bg-gray-500 opacity-40'
-											: gameState.turn === userState?.id
+											: gameState.turn === userState?.id ||
+											  gameState.turn === `p2_${userState?.id}`
 											? 'cursor-pointer bg-gray-600 hover:bg-gray-700'
 											: 'cursor-progress bg-gray-500 hover:bg-gray-500 opacity-70'
 									}`}
 			onClick={() => {
-				if (disabled || hasWinner) return;
+				if (hasWinner) return;
 				if (gameState.status === 'waiting') return;
 				if (gameState.status === 'finished') return;
 				if (
 					gameState.turn === userState?.id ||
-					gameState.turn === `pvp_${userState?.id}`
+					gameState.turn === `p2_${userState?.id}`
 				) {
 					onClick();
 				}
