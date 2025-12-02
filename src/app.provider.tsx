@@ -14,7 +14,6 @@ import { useUserState } from './states/user.state';
 import useWebSocketState from './states/websocket.state';
 import { GameService, UserService } from '@services';
 import { useRouter } from 'next/navigation';
-// import { useRouter } from 'next/compat/router';
 
 export const AppContext = createContext<AppProviderType | undefined>(undefined);
 
@@ -52,8 +51,6 @@ export function AppProvider({ children }: Props) {
 	}, []);
 
 	async function _handleMessages(message: WebSocketMessage) {
-		// Handle the message as needed
-
 		if (message.type === 'registered') {
 			const userId = message.data?.id;
 			if (typeof userId === 'string') {

@@ -1,12 +1,6 @@
 'use client';
 
-import React, {
-	createContext,
-	ReactNode,
-	useContext,
-	useEffect,
-	useMemo,
-} from 'react';
+import React, { createContext, ReactNode, useContext, useEffect } from 'react';
 import { GameProviderType } from './game.provider.types';
 import useGameState, { Player } from './states/game.state';
 import { BoardCells, WebSocketMessage } from '@models';
@@ -102,7 +96,6 @@ export function GameProvider({ hash, children }: Props) {
 		// ACTIONS
 		if (message.type === 'action' && message.data?.action === 'move') {
 			gameActions.playMove(
-				message.from,
 				message.data?.position as string,
 				message.data?.symbol as 'X' | 'O',
 			);
@@ -157,13 +150,11 @@ export function GameProvider({ hash, children }: Props) {
 		timeout: _timeout,
 	};
 
-	// return useMemo(() => {
 	return (
 		<GameContext.Provider value={{ ...AppStates, ...AppActions }}>
 			{children}
 		</GameContext.Provider>
 	);
-	// }, [hash, AppActions, AppStates]);
 }
 
 export function useGameContext() {

@@ -17,7 +17,7 @@ export default function ProgressBar({ duration, onFinish }: Props) {
 		}
 
 		const interval = setInterval(() => {
-			setTimeLeft((prev) => (prev > 0 ? prev - 0.1 : 0)); // reduz a cada 100ms
+			setTimeLeft((prev) => (prev > 0 ? prev - 0.1 : 0));
 		}, 100);
 
 		return () => clearInterval(interval);

@@ -19,4 +19,3 @@ type WebSocketMessageType =
 	| 'registered';
 
 export type DataValue = string | number | boolean | null | undefined | object;
-// export type DataValue = Record<string, any>;

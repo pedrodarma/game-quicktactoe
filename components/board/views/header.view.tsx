@@ -2,18 +2,18 @@ import { SmallTitle } from '@design_system';
 import { faO } from '@fortawesome/free-solid-svg-icons/faO';
 import { faXmark } from '@fortawesome/free-solid-svg-icons/faXmark';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useGameContext } from '@providers';
+import { useAppContext, useGameContext } from '@providers';
 
 export function BoardHeader() {
 	const { gameState } = useGameContext();
+	const { userState } = useAppContext();
 
 	const hasWinner = gameState.winner !== undefined;
-	// const isPlayerXWinner =
-	// 	hasWinner && gameState.winner === gameState.playerX?.id;
-	// const isPlayerOWinner =
-	// 	hasWinner && gameState.winner === gameState.playerO?.id;
 
-	// const _commonStyle = `fa-lg transition-all duration-300 ${
+	const playerX =
+		gameState.playerX?.id === userState?.id ? '(you)' : '(opponent)';
+	const playerO =
+		gameState.playerO?.id === userState?.id ? '(you)' : '(opponent)';
 
 	const playerXBorder =
 		gameState.turn === gameState.playerX?.id
@@ -37,7 +37,7 @@ export function BoardHeader() {
 						Player <FontAwesomeIcon icon={faXmark} className="fa-lg" />
 					</SmallTitle>
 
-					<small>{'(you)'}</small>
+					<small>{playerX}</small>
 				</div>
 
 				<span>vs</span>
@@ -52,7 +52,7 @@ export function BoardHeader() {
 						Player <FontAwesomeIcon icon={faO} className="fa-lg" />
 					</SmallTitle>
 
-					<small>{'(opponent)'}</small>
+					<small>{playerO}</small>
 				</div>
 			</div>
 		</>

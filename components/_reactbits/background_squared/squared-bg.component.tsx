@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useRef, useEffect } from 'react';
-// import "./squared-bg.component.module.css";
 import styles from './squared-bg.component.module.css';
 
 type CanvasStrokeStyle = string | CanvasGradient | CanvasPattern;
@@ -26,7 +25,6 @@ export const SquaredBackground: React.FC<Props> = ({
 	borderColor = '#999',
 	squareSize = 60,
 	hoverFillColor = '#222',
-	// gradientColor = '#060010',
 	gradientColor = 'rgba(0, 0, 0, 0.5)',
 }) => {
 	const canvasRef = useRef<HTMLCanvasElement>(null);

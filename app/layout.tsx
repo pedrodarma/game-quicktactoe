@@ -3,6 +3,33 @@ import './globals.css';
 import { AppProvider } from '@providers';
 import { Chat } from '@components';
 
+interface Props {
+	children: React.ReactNode;
+}
+
+export default function RootLayout({ children }: Props) {
+	return (
+		<html lang="en" className={'dark'}>
+			<head>
+				<link rel="manifest" href="/manifest.json" />
+				<link
+					rel="apple-touch-icon"
+					sizes="180x180"
+					href="/icons/apple-touch-icon.png"
+				/>
+				<meta name="mobile-web-app-capable" content="yes" />
+			</head>
+			<body
+				className={`antialiased font-sans h-dvh transition-all duration-500`}>
+				<AppProvider>
+					{children}
+					<Chat />
+				</AppProvider>
+			</body>
+		</html>
+	);
+}
+
 export const metadata: Metadata = {
 	title: 'QuickTactoe',
 	description: 'Play Tic Tac Toe with friends online. Fast, fun, and free!',
@@ -37,30 +64,3 @@ export const metadata: Metadata = {
 		images: ['https://game-quicktactoe.vercel.app/assets/preview.png'],
 	},
 };
-
-export default function RootLayout({
-	children,
-}: Readonly<{
-	children: React.ReactNode;
-}>) {
-	return (
-		<html lang="en" className={'dark'}>
-			<head>
-				<link rel="manifest" href="/manifest.json" />
-				<link
-					rel="apple-touch-icon"
-					sizes="180x180"
-					href="/icons/apple-touch-icon.png"
-				/>
-				<meta name="mobile-web-app-capable" content="yes" />
-			</head>
-			<body
-				className={`antialiased font-sans h-dvh transition-all duration-500`}>
-				<AppProvider>
-					{children}
-					<Chat />
-				</AppProvider>
-			</body>
-		</html>
-	);
-}

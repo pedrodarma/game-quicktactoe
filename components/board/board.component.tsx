@@ -57,7 +57,7 @@ export function Board() {
 						);
 					})}
 				</div>
-				{isGameRunning && <ProgressBar duration={10} onFinish={timeout} />}
+				{isGameRunning && <ProgressBar duration={7} onFinish={timeout} />}
 			</div>
 			<PlayAgain />
 		</>

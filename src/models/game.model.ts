@@ -8,11 +8,4 @@ export interface Game {
 	watchers: number;
 	maxPlayers: number;
 	minPlayers: number;
-	// id: string;
-	// playerX: string;
-	// playerO: string;
-	// board: string[][];
-	// turn: 'X' | 'O';
-	// status: 'waiting' | 'playing' | 'finished';
-	// winner: 'X' | 'O' | 'draw' | null;
 }

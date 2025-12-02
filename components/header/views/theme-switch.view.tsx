@@ -10,10 +10,6 @@ export function ThemeSwitch() {
 	useEffect(() => {
 		const savedTheme = localStorage.getItem('theme');
 
-		// const currentTheme = document?.documentElement.classList.contains('dark')
-		// 	? 'dark'
-		// 	: 'light';
-
 		if (savedTheme === 'dark') {
 			setIsDark(true);
 			document?.documentElement.classList.add('dark');

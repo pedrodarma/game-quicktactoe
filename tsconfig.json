@@ -23,7 +23,6 @@
       }
     ],
     "paths": {
-      // "@/*": ["./*"],
       "@design_system": [
         "./@design_system/index"
       ],

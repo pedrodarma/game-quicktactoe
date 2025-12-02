@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
 	trailingSlash: true, // Github Pages needs this
 	basePath: '',
 	assetPrefix: '',
-	allowedDevOrigins: isProd ? [] : ['localhost', '192.168.15.15'],
+	allowedDevOrigins: isProd ? [] : ['localhost', '192.168.15.13'],
 	distDir: isProd ? 'build' : 'out',
 	eslint: {
 		dirs: ['components', 'app', 'src'],

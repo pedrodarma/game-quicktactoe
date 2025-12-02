@@ -59,22 +59,14 @@ export default function useGameState() {
 	//  ╠═╝╠╦╝║║ ║╠═╣ ║ ║╣
 	//  ╩  ╩╚═╩╚╝ ╩ ╩ ╩ ╚═╝
 	async function _initialize() {
-		// _cleanState();
+		//
 	}
 
-	async function _playMove(playerId: string, position: string, symbol: string) {
+	async function _playMove(position: string, symbol: string) {
 		if (state.winner) {
-			// console.warn('Game over, no more moves allowed');
 			return;
 		}
-		// if (state.turn !== playerId) {
-		// 	console.warn("It's not your turn");
-		// 	return;
-		// }
-		// if (!state.playerX || !state.playerO) {
-		// 	console.warn('Players not set yet');
-		// 	return;
-		// }
+
 		setState((current) => {
 			const newBoard = { ...current.board };
 			const row = position.charAt(0);
@@ -83,7 +75,6 @@ export default function useGameState() {
 				newBoard[row][col] = symbol;
 				return { ...current, board: newBoard };
 			} else {
-				// console.warn('Invalid move, position already taken');
 				return current;
 			}
 		});
