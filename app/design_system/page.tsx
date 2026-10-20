@@ -8,7 +8,7 @@
  * result-lose, result-draw, result-timeout, result-pvp.
  */
 
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useSyncExternalStore } from 'react';
 import {
 	ChatDock,
 	ClockPanel,
@@ -169,12 +169,16 @@ function ScreenPreview({ screen }: { screen: string }) {
 	);
 }
 
-export default function DesignSystem() {
-	const [screen, setScreen] = useState<string | null>(null);
+const _noSubscribe = () => () => {};
 
-	useEffect(() => {
-		setScreen(new URLSearchParams(window.location.search).get('screen'));
-	}, []);
+export default function DesignSystem() {
+	// Read `?screen=` on the client only (the page is statically exported).
+	const search = useSyncExternalStore(
+		_noSubscribe,
+		() => window.location.search,
+		() => '',
+	);
+	const screen = new URLSearchParams(search).get('screen');
 
 	if (screen) return <ScreenPreview screen={screen} />;
 

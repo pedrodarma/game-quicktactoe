@@ -46,6 +46,17 @@ export const SquaredBackground: React.FC<Props> = ({
 			'(prefers-reduced-motion: reduce)',
 		).matches;
 
+		// Colours may be CSS variables, e.g. "var(--qt-grid)".
+		const rootStyles = getComputedStyle(document.documentElement);
+		const resolve = (color: string) => {
+			const match = /^var\((--[^)]+)\)$/.exec(color.trim());
+			if (!match) return color;
+			return rootStyles.getPropertyValue(match[1]).trim() || color;
+		};
+		const stroke = resolve(borderColor);
+		const hoverFill = resolve(hoverFillColor);
+		const vignette = resolve(gradientColor);
+
 		let width = 0;
 		let height = 0;
 
@@ -67,7 +78,7 @@ export const SquaredBackground: React.FC<Props> = ({
 			const pointer = pointerRef.current;
 
 			ctx.lineWidth = 1;
-			ctx.strokeStyle = borderColor;
+			ctx.strokeStyle = stroke;
 
 			for (let x = -offsetX; x < width + squareSize; x += squareSize) {
 				for (let y = -offsetY; y < height + squareSize; y += squareSize) {
@@ -78,7 +89,7 @@ export const SquaredBackground: React.FC<Props> = ({
 						pointer.y >= y &&
 						pointer.y < y + squareSize
 					) {
-						ctx.fillStyle = hoverFillColor;
+						ctx.fillStyle = hoverFill;
 						ctx.fillRect(x, y, squareSize, squareSize);
 					}
 
@@ -95,7 +106,7 @@ export const SquaredBackground: React.FC<Props> = ({
 				Math.sqrt(width ** 2 + height ** 2) / 2,
 			);
 			gradient.addColorStop(0, 'rgba(0, 0, 0, 0)');
-			gradient.addColorStop(1, gradientColor);
+			gradient.addColorStop(1, vignette);
 
 			ctx.fillStyle = gradient;
 			ctx.fillRect(0, 0, width, height);

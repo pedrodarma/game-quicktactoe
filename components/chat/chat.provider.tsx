@@ -8,6 +8,7 @@ import React, {
 	useEffect,
 	useRef,
 	useState,
+	useSyncExternalStore,
 } from 'react';
 import { usePathname } from 'next/navigation';
 import { useAppContext } from '@providers';
@@ -15,6 +16,20 @@ import { WebSocketMessage } from '@models';
 
 /** The desktop game page docks the chat beside the board from this width. */
 export const CHAT_DOCK_QUERY = '(min-width: 1280px)';
+
+function _subscribeWide(onChange: () => void) {
+	const query = window.matchMedia(CHAT_DOCK_QUERY);
+	query.addEventListener('change', onChange);
+	return () => query.removeEventListener('change', onChange);
+}
+
+function _getWide() {
+	return window.matchMedia(CHAT_DOCK_QUERY).matches;
+}
+
+function _getWideOnServer() {
+	return false;
+}
 
 interface ChatContextType {
 	messages: WebSocketMessage[];
@@ -50,7 +65,12 @@ export function ChatProvider({ children }: { children: ReactNode }) {
 	const [readCount, setReadCount] = useState(0);
 	const [isDrawerOpen, setDrawerOpen] = useState(false);
 	const [isDockOpen, setDockOpen] = useState(true);
-	const [isWide, setIsWide] = useState(false);
+	const [drawerPath, setDrawerPath] = useState(pathname);
+	const isWide = useSyncExternalStore(
+		_subscribeWide,
+		_getWide,
+		_getWideOnServer,
+	);
 	const countRef = useRef(0);
 
 	useEffect(() => {
@@ -63,24 +83,19 @@ export function ChatProvider({ children }: { children: ReactNode }) {
 		return () => clearInterval(timer);
 	}, []);
 
-	useEffect(() => {
-		const query = window.matchMedia(CHAT_DOCK_QUERY);
-		const update = () => setIsWide(query.matches);
-		update();
-		query.addEventListener('change', update);
-		return () => query.removeEventListener('change', update);
-	}, []);
-
-	useEffect(() => {
+	// Close the drawer when navigating to another page.
+	if (drawerPath !== pathname) {
+		setDrawerPath(pathname);
 		setDrawerOpen(false);
-	}, [pathname]);
+	}
 
 	const myId = websocketState.current.userId;
 	const isVisible = isDrawerOpen || (hasDock && isWide && isDockOpen);
 
-	useEffect(() => {
-		if (isVisible) setReadCount(messages.length);
-	}, [isVisible, messages.length]);
+	// Everything on screen counts as read.
+	if (isVisible && readCount !== messages.length) {
+		setReadCount(messages.length);
+	}
 
 	const unread = messages
 		.slice(readCount)

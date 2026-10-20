@@ -5,8 +5,7 @@ import React, {
 	ReactNode,
 	useCallback,
 	useContext,
-	useEffect,
-	useState,
+	useSyncExternalStore,
 } from 'react';
 
 export type ColorTheme = 'dark' | 'light';
@@ -28,26 +27,41 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-function _applyTheme(theme: ColorTheme) {
-	const root = document.documentElement;
-	root.classList.remove('dark', 'light');
-	root.classList.add(theme);
+// The class on <html> is the source of truth; React subscribes to it.
+const _listeners = new Set<() => void>();
+
+function _subscribe(listener: () => void) {
+	_listeners.add(listener);
+	return () => {
+		_listeners.delete(listener);
+	};
+}
+
+function _getSnapshot(): ColorTheme {
+	return document.documentElement.classList.contains('light')
+		? 'light'
+		: 'dark';
+}
+
+function _getServerSnapshot(): ColorTheme {
+	return DEFAULT_THEME;
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-	const [theme, setThemeState] = useState<ColorTheme>(DEFAULT_THEME);
-
-	useEffect(() => {
-		const isLight = document.documentElement.classList.contains('light');
-		setThemeState(isLight ? 'light' : 'dark');
-	}, []);
+	const theme = useSyncExternalStore(
+		_subscribe,
+		_getSnapshot,
+		_getServerSnapshot,
+	);
 
 	const setTheme = useCallback((next: ColorTheme) => {
-		setThemeState(next);
-		_applyTheme(next);
+		const root = document.documentElement;
+		root.classList.remove('dark', 'light');
+		root.classList.add(next);
 		try {
 			localStorage.setItem(THEME_STORAGE_KEY, next);
 		} catch {}
+		_listeners.forEach((listener) => listener());
 	}, []);
 
 	const toggleTheme = useCallback(() => {
