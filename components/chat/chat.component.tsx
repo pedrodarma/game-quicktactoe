@@ -1,79 +1,93 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect } from 'react';
+import { MessageSquare } from 'lucide-react';
+import { cn, IconButton } from '@design_system';
+import { useChat } from './chat.provider';
+import { ChatPanel } from './views/chat-panel.view';
 
-import { ChatButtonView } from './views/chat-button.view';
-import { ChatHeaderView } from './views/header.view';
-import { InputView } from './views/input.view';
-import { useAppContext } from '@providers';
-import { WebSocketMessage } from '@models';
-import { MyMessageView } from './views/my-message.view';
-import { OthersMessageView } from './views/others-message.view';
-
-export function Chat() {
-	const [isOpen, setIsOpen] = useState(false);
-	const [mounted, setMounted] = useState(false);
-	const [messages, setMessages] = useState<WebSocketMessage[]>([]);
-	const { getMessages, websocketState } = useAppContext();
-
-	const bottomRef = useRef<HTMLDivElement | null>(null);
-
-	useEffect(() => {
-		setMounted(true);
-
-		const timer = setInterval(() => {
-			const _messages = getMessages();
-			if (messages.length === _messages.length) {
-				return;
-			}
-			setMessages(() => _messages.filter((msg) => msg.type === 'chat'));
-
-			bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-		}, 100);
-		return () => {
-			clearTimeout(timer);
-			setMounted(false);
-		};
-	}, []);
-
-	if (!mounted) return null;
+/** Header button that opens the chat, with an unread badge. */
+export function ChatButton({ className }: { className?: string }) {
+	const { toggleChat, unread, isVisible } = useChat();
+	const label =
+		unread > 0
+			? `Open chat, ${unread} unread message${unread === 1 ? '' : 's'}`
+			: isVisible
+				? 'Close chat'
+				: 'Open chat';
 
 	return (
-		<>
-			<ChatButtonView
-				onClick={() => {
-					setIsOpen(!isOpen);
-				}}
+		<IconButton
+			aria-label={label}
+			aria-expanded={isVisible}
+			onClick={toggleChat}
+			showBadge={unread > 0 && !isVisible}
+			className={className}
+			icon={<MessageSquare aria-hidden="true" className="size-5" />}
+		/>
+	);
+}
+
+/** Slide-over chat used on phones and on pages without the dock. */
+export function ChatDrawer() {
+	const { isDrawerOpen, closeDrawer, hasDock } = useChat();
+
+	useEffect(() => {
+		if (!isDrawerOpen) return;
+		const onKeyDown = (event: KeyboardEvent) => {
+			if (event.key === 'Escape') closeDrawer();
+		};
+		window.addEventListener('keydown', onKeyDown);
+		return () => window.removeEventListener('keydown', onKeyDown);
+	}, [isDrawerOpen]);
+
+	return (
+		<div
+			className={cn(
+				'fixed inset-0 z-50',
+				!isDrawerOpen && 'pointer-events-none',
+				hasDock && 'xl:hidden',
+			)}
+			inert={!isDrawerOpen}
+			aria-hidden={!isDrawerOpen}>
+			<button
+				type="button"
+				tabIndex={-1}
+				aria-label="Close chat"
+				onClick={closeDrawer}
+				className={cn(
+					'absolute inset-0 bg-overlay transition-opacity duration-300',
+					isDrawerOpen ? 'opacity-100' : 'opacity-0',
+				)}
 			/>
+			<aside
+				role="dialog"
+				aria-modal="true"
+				aria-label="Chat"
+				className={cn(
+					'absolute top-0 right-0 bottom-0 w-full border-l border-line shadow-[0_0_80px_var(--qt-shadow)] transition-transform duration-300 sm:w-[400px]',
+					isDrawerOpen ? 'translate-x-0' : 'translate-x-full',
+				)}>
+				{isDrawerOpen && <ChatPanel onClose={closeDrawer} autoFocus />}
+			</aside>
+		</div>
+	);
+}
 
-			<div
-				className={`fixed top-0 bottom-0 transition-all duration-300 ${
-					isOpen ? 'right-0' : '-right-200'
-				} z-50 bg-white w-sm  border-l border-gray-200 dark:bg-gray-200 dark:border-gray-800`}>
-				<div className="p-3">
-					<ChatHeaderView
-						onClose={() => {
-							setIsOpen(false);
-						}}
-					/>
-				</div>
+/** Chat docked beside the board on wide game screens. */
+export function ChatDock({ className }: { className?: string }) {
+	const { isDockOpen, setDockOpen } = useChat();
 
-				<div
-					className={`flex flex-col overflow-y-auto mb-1 scrollbar-hidden h-full [max-height:calc(100dvh-120px)]`}>
-					<div className="flex flex-col gap-2 mb-0 px-3 h-full">
-						{messages.map((message, index) =>
-							message.from === websocketState.current.userId ? (
-								<MyMessageView key={index} message={message} />
-							) : (
-								<OthersMessageView key={index} message={message} />
-							),
-						)}
-					</div>
-					<div className="mt-0" ref={bottomRef} />
-				</div>
+	if (!isDockOpen) return null;
 
-				<InputView />
-			</div>
-		</>
+	return (
+		<aside
+			aria-label="Chat"
+			className={cn(
+				'hidden overflow-hidden rounded-[28px] border border-line xl:flex xl:w-[320px] xl:shrink-0 xl:flex-col',
+				className,
+			)}>
+			<ChatPanel onClose={() => setDockOpen(false)} />
+		</aside>
 	);
 }

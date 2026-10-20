@@ -1,18 +1,25 @@
 'use client';
 
-import { Footer, MainHeader, MainMenu, SquaredBackground } from '@components';
+import {
+	BoardPreview,
+	Footer,
+	HomeHero,
+	MainHeader,
+	MainMenu,
+} from '@components';
 
 export default function Home() {
 	return (
-		<div className="flex flex-col items-center -z-10 justify-items-center h-dvh px-8 pb-20 gap-16 sm:p-20 sm:pt-10">
-			<div className="fixed top-0 left-0 w-full h-full -z-0 overflow-hidden">
-				<SquaredBackground hoverFillColor="#ffffff" borderColor="#ffffff" />
-			</div>
+		<div className="mx-auto flex min-h-dvh w-full max-w-[1376px] flex-col px-5 pt-5 pb-6 lg:px-8 lg:pb-14">
 			<MainHeader />
-			<main className="flex items-center grow pb-20 z-1">
-				<MainMenu />
+
+			<main className="flex flex-1 flex-col lg:grid lg:grid-cols-[minmax(0,640px)_minmax(0,1fr)] lg:grid-rows-[auto_auto] lg:content-center lg:gap-x-14 lg:gap-y-7 lg:pt-6">
+				<HomeHero className="mt-9 lg:col-start-1 lg:row-start-1 lg:mt-0 lg:self-end" />
+				<BoardPreview className="mt-8 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:mt-0" />
+				<MainMenu className="mt-auto pt-8 lg:col-start-1 lg:row-start-2 lg:mt-0 lg:self-start lg:pt-0" />
 			</main>
-			<Footer />
+
+			<Footer className="mt-3 lg:hidden" />
 		</div>
 	);
 }
