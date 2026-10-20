@@ -9,9 +9,6 @@ const nextConfig: NextConfig = {
 	assetPrefix: '',
 	allowedDevOrigins: isProd ? [] : ['localhost', '192.168.15.13'],
 	distDir: isProd ? 'build' : 'out',
-	eslint: {
-		dirs: ['components', 'app', 'src'],
-	},
 };
 
 export default nextConfig;
