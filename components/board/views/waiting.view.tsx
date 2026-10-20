@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Timer } from 'lucide-react';
 import { buttonClasses, Eyebrow, LogoMark } from '@design_system';
-import { GameMode, MODE_LABEL, MOVE_DURATION } from '../game.utils';
+import { GameMode, MODE_LABEL, MATCH_DURATION } from '../game.utils';
 
 // Cells light up in a spiral; the centre holds the logo.
 const _delays = [0, 0.15, 0.3, 1.05, null, 0.45, 0.9, 0.75, 0.6];
@@ -51,8 +51,8 @@ export function WaitingView({ mode }: { mode: GameMode }) {
 						<Timer aria-hidden="true" className="size-5 text-x" />
 					</span>
 					<p className="text-sm leading-[1.4] text-ink-2 @3xl:text-[15px]">
-						<strong className="text-ink">Get ready.</strong> You’ll have{' '}
-						{MOVE_DURATION} seconds for every move.
+						<strong className="text-ink">Get ready.</strong> Be quick:{' '}
+						the whole match lasts {MATCH_DURATION} seconds.
 					</p>
 				</div>
 				<Link

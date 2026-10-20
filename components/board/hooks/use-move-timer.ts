@@ -3,17 +3,17 @@
 import { useEffect, useRef, useState } from 'react';
 
 interface Props {
-	/** Seconds per move. */
+	/** Seconds on the clock. */
 	duration: number;
 	/** The clock only runs while the game is being played. */
 	running: boolean;
-	/** Restarts the clock whenever it changes (e.g. the current turn). */
+	/** Restarts the clock whenever it changes (e.g. a new game). */
 	resetKey?: string;
 	onExpire: () => void;
 }
 
 /**
- * Per-move countdown. Returns the seconds left (0.1s resolution) and calls
+ * Match countdown. Returns the seconds left (0.1s resolution) and calls
  * `onExpire` once when the clock hits zero.
  */
 export function useMoveTimer({ duration, running, resetKey, onExpire }: Props) {

@@ -4,8 +4,8 @@ export type Piece = 'X' | 'O';
 export type GameMode = 'online' | 'bot' | 'pvp';
 export type Outcome = 'win' | 'lose' | 'draw' | 'timeout' | 'x-wins' | 'o-wins';
 
-/** Seconds each player has to make a move. */
-export const MOVE_DURATION = 7;
+/** Seconds for the whole match (QuickTacToe is a 7-second game). */
+export const MATCH_DURATION = 7;
 
 export const MODE_LABEL: Record<GameMode, string> = {
 	online: 'Online match',
@@ -74,7 +74,7 @@ export function outcomeCopy(
 		case 'timeout':
 			return {
 				title: 'Time’s up!',
-				subtitle: 'The clock hit zero before the move was made.',
+				subtitle: 'The clock hit zero before anyone got three in a row.',
 			};
 		case 'draw':
 		default:
