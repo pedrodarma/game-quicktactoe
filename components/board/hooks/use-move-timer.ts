@@ -17,12 +17,18 @@ interface Props {
  * `onExpire` once when the clock hits zero.
  */
 export function useMoveTimer({ duration, running, resetKey, onExpire }: Props) {
-	const [timeLeft, setTimeLeft] = useState(duration);
+	// Time left, tagged with the turn it belongs to, so a new turn shows a
+	// full clock straight away instead of the previous turn's value.
+	const [tick, setTick] = useState<{ key?: string; left: number }>({
+		left: duration,
+	});
 	const onExpireRef = useRef(onExpire);
-	onExpireRef.current = onExpire;
 
 	useEffect(() => {
-		setTimeLeft(duration);
+		onExpireRef.current = onExpire;
+	});
+
+	useEffect(() => {
 		if (!running) return;
 
 		const startedAt = Date.now();
@@ -30,7 +36,7 @@ export function useMoveTimer({ duration, running, resetKey, onExpire }: Props) {
 
 		const interval = setInterval(() => {
 			const left = Math.max(0, duration - (Date.now() - startedAt) / 1000);
-			setTimeLeft(left);
+			setTick({ key: resetKey, left });
 
 			if (left <= 0 && !expired) {
 				expired = true;
@@ -42,5 +48,5 @@ export function useMoveTimer({ duration, running, resetKey, onExpire }: Props) {
 		return () => clearInterval(interval);
 	}, [duration, running, resetKey]);
 
-	return timeLeft;
+	return running && tick.key === resetKey ? tick.left : duration;
 }
