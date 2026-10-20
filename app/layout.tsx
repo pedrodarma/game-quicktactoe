@@ -72,3 +72,8 @@ export const metadata: Metadata = {
 		images: ['https://game-quicktactoe.vercel.app/assets/preview.png'],
 	},
 };
+
+// QuickTactoe is a quick, simple, and fun online Tic Tac Toe game that lets you play with friends or AI opponents.
+// Enjoy seamless multiplayer matches, customizable game settings, and a sleek interface designed for all devices.
+// Whether you're a casual player or a competitive strategist, QuickTactoe offers endless fun and challenges.
+// Join now and experience the classic game like never before!
