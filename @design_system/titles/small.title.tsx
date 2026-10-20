@@ -1,9 +1,15 @@
-import { constants } from './_constants';
+import { ReactNode } from 'react';
+import { cn } from '../utils';
 
-export function SmallTitle({ children }: { children: React.ReactNode }) {
+export function SmallTitle({
+	children,
+	className,
+}: {
+	children: ReactNode;
+	className?: string;
+}) {
 	return (
-		<h3
-			className={`${constants.fontFamily} text-xl sm:text-xl md:text-2xl font-semibold leading-tight select-none`}>
+		<h3 className={cn('text-base font-bold text-ink', className)}>
 			{children}
 		</h3>
 	);

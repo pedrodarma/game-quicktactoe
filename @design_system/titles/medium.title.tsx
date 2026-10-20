@@ -1,9 +1,22 @@
-import { constants } from './_constants';
+import { ReactNode } from 'react';
+import { cn } from '../utils';
 
-export function MediumTitle({ children }: { children: React.ReactNode }) {
+export function MediumTitle({
+	children,
+	className,
+	id,
+}: {
+	children: ReactNode;
+	className?: string;
+	id?: string;
+}) {
 	return (
 		<h2
-			className={`${constants.fontFamily} text-2xl sm:text-3xl md:text-4xl font-semibold leading-tight select-none`}>
+			id={id}
+			className={cn(
+				'font-display text-2xl leading-[1.1] font-extrabold tracking-[-0.02em] text-ink lg:text-[1.875rem]',
+				className,
+			)}>
 			{children}
 		</h2>
 	);

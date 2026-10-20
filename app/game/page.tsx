@@ -1,7 +1,7 @@
 'use client';
 
 import { GameProvider } from '@providers';
-import { Board, Footer, GameHeader } from '@components';
+import { ChatDock, GameHeader, GameScreen } from '@components';
 import { useEffect, useState } from 'react';
 import { useParams, usePathname } from 'next/navigation';
 
@@ -30,14 +30,18 @@ export default function Game() {
 	}
 
 	return (
-		<div className="flex flex-col h-dvh px-8 pb-20 gap-1 sm:p-20 sm:pt-10">
+		<div className="mx-auto flex min-h-dvh w-full max-w-[1376px] flex-col px-5 pt-5 pb-6 lg:px-8 lg:pb-8">
 			{hash && hash.length > 0 && (
 				<GameProvider key={'provider' + hash} hash={hash}>
 					<GameHeader />
-					<main className="flex flex-col grow row-start-2 items-center justify-center">
-						<Board key={'board' + hash} />
+					<main className="flex flex-1 gap-6 pt-5 lg:pt-6">
+						<section
+							aria-label="Game"
+							className="@container flex min-w-0 flex-1 flex-col lg:rounded-[28px] lg:border lg:border-line lg:bg-surface/60 lg:px-6 lg:py-10">
+							<GameScreen key={'game' + hash} />
+						</section>
+						<ChatDock />
 					</main>
-					<Footer />
 				</GameProvider>
 			)}
 		</div>

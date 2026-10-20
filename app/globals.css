@@ -1,12 +1,149 @@
 @import 'tailwindcss';
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* `dark:` follows the class set on <html> by the ThemeProvider, not the OS. */
+@custom-variant dark (&:where(.dark, .dark *));
+@custom-variant light (&:where(.light, .light *));
 
-:root {
-	--background: #ffffff;
-	--foreground: #171717;
+/* ------------------------------------------------------------------ */
+/* Blitz design tokens                                                */
+/* Dark is the default theme; `.light` on <html> switches to light.   */
+/* ------------------------------------------------------------------ */
+:root,
+:root.dark {
+	color-scheme: dark;
+
+	--qt-ground: #0c0d10;
+	--qt-surface: #15171c;
+	--qt-surface-2: #1d2027;
+	--qt-line: #2a2e37;
+	--qt-track: #0c0d10;
+
+	--qt-text: #f3f2ee;
+	--qt-text-2: #c9ccd3;
+	--qt-muted: #8a8f9c;
+
+	--qt-x: #ff5f2e;
+	--qt-x-text: #ff5f2e;
+	--qt-x-tint: #291714;
+	--qt-o: #8fc8ff;
+	--qt-o-text: #8fc8ff;
+	--qt-o-tint: #192028;
+
+	--qt-danger: #ff3b30;
+	--qt-online: #3ddc84;
+	--qt-connecting: #f5a524;
+	--qt-offline: #8a8f9c;
+
+	--qt-primary: #f3f2ee;
+	--qt-on-primary: #0c0d10;
+	--qt-on-primary-2: #3a3d45;
+
+	--qt-overlay: rgba(8, 9, 11, 0.74);
+	--qt-shadow: rgba(0, 0, 0, 0.45);
+	--qt-grid: rgba(255, 255, 255, 0.06);
+	--qt-grid-hover: rgba(255, 255, 255, 0.035);
+	--qt-vignette: rgba(12, 13, 16, 0.9);
+}
+
+:root.light {
+	color-scheme: light;
+
+	--qt-ground: #f4f3ef;
+	--qt-surface: #ffffff;
+	--qt-surface-2: #eceae4;
+	--qt-line: #dcd9d1;
+	--qt-track: #eceae4;
+
+	--qt-text: #121317;
+	--qt-text-2: #3a3d45;
+	--qt-muted: #5f6370;
+
+	--qt-x: #e0560f;
+	--qt-x-text: #b93d0b;
+	--qt-x-tint: #fde9de;
+	--qt-o: #1f56d1;
+	--qt-o-text: #1f56d1;
+	--qt-o-tint: #e3ebfb;
+
+	--qt-danger: #d92d20;
+	--qt-online: #16a34a;
+	--qt-connecting: #b45309;
+	--qt-offline: #5f6370;
+
+	--qt-primary: #121317;
+	--qt-on-primary: #f4f3ef;
+	--qt-on-primary-2: #c9ccd3;
+
+	--qt-overlay: rgba(18, 19, 23, 0.42);
+	--qt-shadow: rgba(18, 19, 23, 0.12);
+	--qt-grid: rgba(18, 19, 23, 0.07);
+	--qt-grid-hover: rgba(18, 19, 23, 0.035);
+	--qt-vignette: rgba(244, 243, 239, 0.9);
+}
+
+@theme inline {
+	--color-ground: var(--qt-ground);
+	--color-surface: var(--qt-surface);
+	--color-surface-2: var(--qt-surface-2);
+	--color-line: var(--qt-line);
+	--color-track: var(--qt-track);
+
+	--color-ink: var(--qt-text);
+	--color-ink-2: var(--qt-text-2);
+	--color-muted: var(--qt-muted);
+
+	--color-x: var(--qt-x);
+	--color-x-text: var(--qt-x-text);
+	--color-x-tint: var(--qt-x-tint);
+	--color-o: var(--qt-o);
+	--color-o-text: var(--qt-o-text);
+	--color-o-tint: var(--qt-o-tint);
+
+	--color-danger: var(--qt-danger);
+	--color-online: var(--qt-online);
+	--color-connecting: var(--qt-connecting);
+	--color-offline: var(--qt-offline);
+
+	--color-primary: var(--qt-primary);
+	--color-on-primary: var(--qt-on-primary);
+	--color-on-primary-2: var(--qt-on-primary-2);
+
+	--color-overlay: var(--qt-overlay);
+	--color-shadow: var(--qt-shadow);
+
+	--font-display: 'Unbounded Variable', 'Arial Black', system-ui, sans-serif;
+	--font-sans: 'Manrope Variable', system-ui, -apple-system, sans-serif;
+	--font-mono: 'JetBrains Mono Variable', ui-monospace, Menlo, monospace;
+}
+
+@layer base {
+	/* Only <html> paints the ground, so the fixed animated background
+	   (negative z-index) stays visible behind the page. */
+	html {
+		background-color: var(--qt-ground);
+		color: var(--qt-text);
+	}
+
+	body {
+		background: transparent;
+		color: var(--qt-text);
+		font-family: var(--font-sans);
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	}
+
+	a {
+		color: inherit;
+	}
+
+	:focus-visible {
+		outline: 2px solid var(--qt-o);
+		outline-offset: 2px;
+	}
+
+	dialog {
+		color: inherit;
+	}
 }
 
 @layer utilities {
@@ -15,45 +152,36 @@
 		display: none;
 	}
 
-	/* IE and Edge */
+	/* IE, Edge and Firefox */
 	.scrollbar-hidden {
 		-ms-overflow-style: none;
-	}
-
-	/* Firefox */
-	.scrollbar-hidden {
 		scrollbar-width: none;
 	}
-}
 
-@theme inline {
-	--color-background: var(--background);
-	--color-foreground: var(--foreground);
-}
-
-/* @media (prefers-color-scheme: dark) {
-	:root {
-		--background: #0a0a0a;
-		--foreground: #ededed;
+	.tabular-nums {
+		font-variant-numeric: tabular-nums;
 	}
-} */
-
-html,
-body {
-	background: var(--background);
-	color: var(--foreground);
 }
 
-.dark body {
-	--background: #0a0a0a;
-	--foreground: #ededed;
-
-	color: #ededed;
+/* Waiting screen: cells light up one after another. */
+@keyframes qt-scan {
+	0%,
+	100% {
+		background-color: var(--qt-surface);
+		border-color: var(--qt-line);
+	}
+	35% {
+		background-color: var(--qt-x-tint);
+		border-color: var(--qt-x);
+	}
 }
 
-.light body {
-	--background: #ededed;
-	--foreground: #0a0a0a;
+.qt-scan {
+	animation: qt-scan 1.8s ease-in-out infinite;
+}
 
-	color: #0a0a0a;
+@media (prefers-reduced-motion: reduce) {
+	.qt-scan {
+		animation: none;
+	}
 }

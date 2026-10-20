@@ -1,45 +1,66 @@
 'use client';
 
-import { useAppContext } from '@providers';
 import { useEffect, useState } from 'react';
+import {
+	ConnectionStatus,
+	StatusDot,
+	statusLabel,
+	StatusPill,
+} from '@design_system';
 
-type _Status =
-	| 'Connecting'
-	| 'Open'
-	| 'Closing'
-	| 'Closed'
-	| 'Error'
-	| 'Uninstantiated';
+interface Props {
+	/** The websocket state ref exposed by the app or game provider. */
+	websocketState: { current: { status: string } };
+	/** Optional text instead of "Online" / "Offline". */
+	label?: string;
+	variant?: 'pill' | 'dot' | 'inline';
+	className?: string;
+}
 
-export function StatusView() {
-	const { websocketState } = useAppContext();
-	const [status, setStatus] = useState<_Status>('Uninstantiated');
+/** Polls a websocket state ref and shows its connection status. */
+export function ConnectionStatusView({
+	websocketState,
+	label,
+	variant = 'pill',
+	className,
+}: Props) {
+	const [status, setStatus] = useState<ConnectionStatus>(
+		websocketState.current.status as ConnectionStatus,
+	);
 
 	useEffect(() => {
-		const timer = setInterval(() => {
-			const _status = websocketState.current.status as _Status;
-			setStatus(_status);
-		}, 3000);
+		const read = () =>
+			setStatus(websocketState.current.status as ConnectionStatus);
+		read();
+		const timer = setInterval(read, 1000);
 		return () => clearInterval(timer);
-	}, []);
+	}, [websocketState]);
 
-	const _colors = {
-		Connecting: 'orange-500',
-		Open: 'green-500',
-		Closing: 'blue-500',
-		Closed: 'red-300',
-		Error: 'red-500',
-		Uninstantiated: 'gray-500',
-	};
+	if (variant === 'dot') {
+		return (
+			<span className={className} title={statusLabel(status)}>
+				<StatusDot status={status} />
+				<span className="sr-only">{statusLabel(status)}</span>
+			</span>
+		);
+	}
 
-	const _color = () => _colors[status] ?? 'red-300';
+	if (variant === 'inline') {
+		return (
+			<span
+				className={`inline-flex items-center gap-1.5 text-xs font-semibold text-muted ${className ?? ''}`}>
+				<StatusDot status={status} className="size-1.5" />
+				<span>{label ?? statusLabel(status)}</span>
+				{label && <span className="sr-only">, {statusLabel(status)}</span>}
+			</span>
+		);
+	}
 
 	return (
-		<div className={`flex w-3 h-3 rounded-full`}>
-			<div
-				className={`w-3 h-3 rounded-full bg-${_color()}`}
-				title={status}></div>
-			{/* {_color} */}
-		</div>
+		<StatusPill
+			status={status}
+			label={label}
+			className={className}
+		/>
 	);
 }

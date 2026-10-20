@@ -1,10 +1,16 @@
-import { constants } from './_constants';
+import { ReactNode } from 'react';
+import { cn } from '../utils';
 
-export function MediumText({ children }: { children: React.ReactNode }) {
+export function MediumText({
+	children,
+	className,
+}: {
+	children: ReactNode;
+	className?: string;
+}) {
 	return (
-		<div
-			className={`${constants.fontFamily} pb-1 text-base sm:text-base md:text-base leading-tight select-none`}>
+		<p className={cn('text-[15px] leading-normal text-ink-2', className)}>
 			{children}
-		</div>
+		</p>
 	);
 }

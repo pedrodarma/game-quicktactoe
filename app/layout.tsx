@@ -1,7 +1,10 @@
 import type { Metadata } from 'next';
+import '@fontsource-variable/unbounded';
+import '@fontsource-variable/manrope';
+import '@fontsource-variable/jetbrains-mono';
 import './globals.css';
-import { AppProvider } from '@providers';
-import { Chat } from '@components';
+import { AppProvider, themeInitScript, ThemeProvider } from '@providers';
+import { AppBackground, ChatDrawer, ChatProvider } from '@components';
 
 interface Props {
 	children: React.ReactNode;
@@ -9,8 +12,9 @@ interface Props {
 
 export default function RootLayout({ children }: Props) {
 	return (
-		<html lang="en" className={'dark'}>
+		<html lang="en" className="dark" suppressHydrationWarning>
 			<head>
+				<script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
 				<link rel="manifest" href="/manifest.json" />
 				<link
 					rel="apple-touch-icon"
@@ -19,19 +23,23 @@ export default function RootLayout({ children }: Props) {
 				/>
 				<meta name="mobile-web-app-capable" content="yes" />
 			</head>
-			<body
-				className={`antialiased font-sans h-dvh transition-all duration-500`}>
-				<AppProvider>
-					{children}
-					<Chat />
-				</AppProvider>
+			<body className="min-h-dvh">
+				<ThemeProvider>
+					<AppProvider>
+						<ChatProvider>
+							<AppBackground />
+							{children}
+							<ChatDrawer />
+						</ChatProvider>
+					</AppProvider>
+				</ThemeProvider>
 			</body>
 		</html>
 	);
 }
 
 export const metadata: Metadata = {
-	title: 'QuickTactoe',
+	title: 'QuickTacToe',
 	description: 'Play Tic Tac Toe with friends online. Fast, fun, and free!',
 
 	icons: {
@@ -64,3 +72,8 @@ export const metadata: Metadata = {
 		images: ['https://game-quicktactoe.vercel.app/assets/preview.png'],
 	},
 };
+
+// QuickTactoe is a quick, simple, and fun online Tic Tac Toe game that lets you play with friends or AI opponents.
+// Enjoy seamless multiplayer matches, customizable game settings, and a sleek interface designed for all devices.
+// Whether you're a casual player or a competitive strategist, QuickTactoe offers endless fun and challenges.
+// Join now and experience the classic game like never before!

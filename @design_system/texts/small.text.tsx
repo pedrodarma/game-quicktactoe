@@ -1,10 +1,16 @@
-import { constants } from './_constants';
+import { ReactNode } from 'react';
+import { cn } from '../utils';
 
-export function SmallText({ children }: { children: React.ReactNode }) {
+export function SmallText({
+	children,
+	className,
+}: {
+	children: ReactNode;
+	className?: string;
+}) {
 	return (
-		<div
-			className={`${constants.fontFamily} pb-1 text-sm sm:text-sm md:text-sm leading-tight select-none`}>
+		<p className={cn('text-[13px] leading-[1.4] text-muted', className)}>
 			{children}
-		</div>
+		</p>
 	);
 }

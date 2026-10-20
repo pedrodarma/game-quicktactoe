@@ -1,21 +1,23 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ArrowUpRight } from 'lucide-react';
+import { cn, GithubIcon } from '@design_system';
 import { HowToPlay } from '../how_to_play';
-import { faGithub } from '@fortawesome/free-brands-svg-icons';
-import { MediumText } from '@design_system';
+import { GITHUB_URL } from '../header/main-header.component';
 
-export function Footer() {
+/** Phone footer: the desktop header already holds these links. */
+export function Footer({ className }: { className?: string }) {
 	return (
-		<footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-between w-full max-w-lg mx-auto z-1">
+		<footer
+			className={cn('flex items-center justify-between gap-3', className)}>
 			<HowToPlay />
-
 			<a
-				href="https://github.com/pedrodarma/game-quicktactoe"
+				href={GITHUB_URL}
 				target="_blank"
-				className="flex items-center gap-2"
-				rel="noopener noreferrer">
-				<FontAwesomeIcon icon={faGithub} className="fa-lg" />
-
-				<MediumText>Github →</MediumText>
+				rel="noopener noreferrer"
+				className="flex min-h-11 items-center gap-2 text-sm font-semibold text-ink-2 transition-colors hover:text-ink">
+				<GithubIcon />
+				<span>GitHub</span>
+				<ArrowUpRight aria-hidden="true" className="size-3.5" />
+				<span className="sr-only">(opens in a new tab)</span>
 			</a>
 		</footer>
 	);

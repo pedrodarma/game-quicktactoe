@@ -1,10 +1,20 @@
-import { constants } from './_constants';
+import { ReactNode } from 'react';
+import { cn } from '../utils';
 
-export function LargeText({ children }: { children: React.ReactNode }) {
+export function LargeText({
+	children,
+	className,
+}: {
+	children: ReactNode;
+	className?: string;
+}) {
 	return (
-		<div
-			className={`${constants.fontFamily} pb-1 text-lg sm:text-lg md:text-lg leading-tight select-none`}>
+		<p
+			className={cn(
+				'text-base leading-[1.45] text-ink-2 lg:text-lg lg:leading-[1.5]',
+				className,
+			)}>
 			{children}
-		</div>
+		</p>
 	);
 }

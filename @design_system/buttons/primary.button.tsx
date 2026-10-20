@@ -1,26 +1,34 @@
-interface Props {
+import { ButtonHTMLAttributes, ReactNode } from 'react';
+import { buttonClasses, ButtonSize } from './button.styles';
+
+interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
 	isLoading?: boolean;
-	disabled?: boolean;
-	children: React.ReactNode;
-	onClick: () => void;
+	size?: ButtonSize;
+	icon?: ReactNode;
 }
 
 export function PrimaryButton({
 	isLoading = false,
 	disabled = false,
+	size = 'md',
+	icon,
 	children,
-	onClick,
+	className,
+	type = 'button',
+	...rest
 }: Props) {
-	const _loading = disabled
-		? 'not-allowed'
-		: isLoading
-		? 'cursor-progress'
-		: 'cursor-pointer';
-
 	return (
 		<button
-			className={`px-4 py-1 shrink bg-blue-500 text-white rounded hover:bg-blue-600 transition ${_loading}`}
-			onClick={onClick}>
+			type={type}
+			disabled={disabled || isLoading}
+			aria-busy={isLoading || undefined}
+			className={buttonClasses(
+				'primary',
+				size,
+				isLoading ? `cursor-progress ${className ?? ''}` : className,
+			)}
+			{...rest}>
+			{icon}
 			{children}
 		</button>
 	);
