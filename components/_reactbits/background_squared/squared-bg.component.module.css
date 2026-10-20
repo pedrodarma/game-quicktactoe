@@ -1,8 +1,5 @@
 .squares_canvas {
-	background: var(--background);
-	/* background: var(--background); */
-	/* color: red; */
-	/* color: var(--foreground); */
+	background: var(--qt-ground);
 	width: 100%;
 	height: 100%;
 	border: none;

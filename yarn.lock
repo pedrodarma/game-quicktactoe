@@ -379,41 +379,20 @@
     "@eslint/core" "^0.15.2"
     levn "^0.4.1"
 
-"@fortawesome/fontawesome-common-types@7.0.1":
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-7.0.1.tgz#e9ab94b1ca93e7020e3c7eda2ef1ba8cca8ba1dc"
-  integrity sha512-0VpNtO5cNe1/HQWMkl4OdncYK/mv9hnBte0Ew0n6DMzmo3Q3WzDFABHm6LeNTipt5zAyhQ6Ugjiu8aLaEjh1gg==
+"@fontsource-variable/jetbrains-mono@5.3.0":
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/@fontsource-variable/jetbrains-mono/-/jetbrains-mono-5.3.0.tgz#5738dedd3af40606b0d9b7626f4ba7c4586cb39b"
+  integrity sha512-F32xpS2NsGYoQi2ADSkKTgpJj7ozajsGgDJ8woTnqjmIB+dxDIqImjl4pXZVEExu8UFZ2ndhmX18EBS/hdz3Lw==
 
-"@fortawesome/fontawesome-free@^7.0.1":
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free/-/fontawesome-free-7.0.1.tgz#c1ac7f07ba2df47d1de7b7236fad25c4e6ca5076"
-  integrity sha512-RLmb9U6H2rJDnGxEqXxzy7ANPrQz7WK2/eTjdZqyU9uRU5W+FkAec9uU5gTYzFBH7aoXIw2WTJSCJR4KPlReQw==
+"@fontsource-variable/manrope@5.3.0":
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/@fontsource-variable/manrope/-/manrope-5.3.0.tgz#da97b427a854b8169141364b8080a9e5f3922518"
+  integrity sha512-6D5dgokHsWDDMtmXHznKa0hK229NN+1a4BLPmUCLqcO1Pw5EEhWY5RFt0AcXnVRAljFFPfRtLkJePQj6LSsV6g==
 
-"@fortawesome/fontawesome-svg-core@^7.0.1":
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-svg-core/-/fontawesome-svg-core-7.0.1.tgz#f5f7bbfe09e7cc35fd30eefe6be018d2e9c5dd4d"
-  integrity sha512-x0cR55ILVqFpUioSMf6ebpRCMXMcheGN743P05W2RB5uCNpJUqWIqW66Lap8PfL/lngvjTbZj0BNSUweIr/fHQ==
-  dependencies:
-    "@fortawesome/fontawesome-common-types" "7.0.1"
-
-"@fortawesome/free-brands-svg-icons@^7.0.1":
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/@fortawesome/free-brands-svg-icons/-/free-brands-svg-icons-7.0.1.tgz#2a975ae2a26710cb2b34c25d4fe706dcd4747f69"
-  integrity sha512-6xPmn5SrND/GM0+W33E77x05+aDn6RpR02eWd8eLdN0IxY0vXa5yU/ugaAKloOVxiG9w2330TSRsbJYL6c57Ow==
-  dependencies:
-    "@fortawesome/fontawesome-common-types" "7.0.1"
-
-"@fortawesome/free-solid-svg-icons@^7.0.1":
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/@fortawesome/free-solid-svg-icons/-/free-solid-svg-icons-7.0.1.tgz#890ae28848c97c41a77cac829dee558ccc1851c9"
-  integrity sha512-esKuSrl1WMOTMDLNt38i16VfLe/gRZt2ZAJ3Yw7slfs7sj583MKqNFqO57zmhknk1Sya6f9Wys89aCzIJkcqlg==
-  dependencies:
-    "@fortawesome/fontawesome-common-types" "7.0.1"
-
-"@fortawesome/react-fontawesome@^3.0.2":
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/@fortawesome/react-fontawesome/-/react-fontawesome-3.0.2.tgz#275ab6bc04977e145b072ba18c24779eb3427073"
-  integrity sha512-cmp/nT0pPC7HUALF8uc3+D5ECwEBWxYQbOIHwtGUWEu72sWtZc26k5onr920HWOViF0nYaC+Qzz6Ln56SQcaVg==
+"@fontsource-variable/unbounded@5.3.0":
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/@fontsource-variable/unbounded/-/unbounded-5.3.0.tgz#23f6c61b8d28d969631b38914e0d9ee1bde1daa0"
+  integrity sha512-ea565Ncn4r7gPdBEHcmaF31V11hDfkL7b/JCklLobQbMfbu2ZZQrVWNgdeEFWFLqNh36yhieZWOgxdAnMTzrLg==
 
 "@humanfs/core@^0.19.1":
   version "0.19.1"
@@ -3209,11 +3188,6 @@ magic-string@^0.30.18:
   dependencies:
     "@jridgewell/sourcemap-codec" "^1.5.5"
 
-material-icons@^1.13.14:
-  version "1.13.14"
-  resolved "https://registry.yarnpkg.com/material-icons/-/material-icons-1.13.14.tgz#65ae8693550b9f789036bd4cf29e775f1bd389ed"
-  integrity sha512-kZOfc7xCC0rAT8Q3DQixYAeT+tBqZnxkseQtp2bxBxz7q5pMAC+wmit7vJn1g/l7wRU+HEPq23gER4iPjGs5Cg==
-
 math-intrinsics@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/math-intrinsics/-/math-intrinsics-1.1.0.tgz#a0dd74be81e2aa5c2f27e65ce283605ee4e2b7f9"
@@ -3761,11 +3735,6 @@ react-is@^16.13.1:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
-
-react-loading-indicators@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/react-loading-indicators/-/react-loading-indicators-1.0.1.tgz#7e57d32f4088853f650d851096e48a219d43bc6d"
-  integrity sha512-tmGHdzw4arI83y8VYirck1n7suvdh1LAkeLk2v2pYMAWhPesQWcexqWKh9x6jDz/XAaIX/wFKS9MdDV8sSdoVw==
 
 react@19.1.0:
   version "19.1.0"
