@@ -1,0 +1,35 @@
+1:"$Sreact.fragment"
+2:"/_next/static/chunks/0umf92h1sb77c.js"
+3:"/_next/static/chunks/2clkri_wpp28a.js"
+4:"/_next/static/chunks/0yvmodb7s437h.js"
+5:I[58551,["$2","$3","$4"],"themeInitScript"]
+6:I[58551,["$2","$3","$4"],"ThemeProvider"]
+7:I[3253,["$2","$3","$4"],"AppProvider"]
+8:I[65913,["$2","$3","$4"],"ChatProvider"]
+9:I[17423,["$2","$3","$4"],"AppBackground"]
+a:I[39756,["$2","$3","$4"],"default"]
+b:I[37457,["$2","$3","$4"],"default"]
+c:"/_next/static/chunks/0qd6jc8ixfsfq.js"
+d:I[36768,["$2","$3","$4","$c"],"default"]
+e:I[44615,["$2","$3","$4"],"ChatDrawer"]
+10:I[47257,["$2","$3","$4"],"ClientPageRoot"]
+11:"/_next/static/chunks/03zg7d9r0ex02.js"
+12:I[31713,["$2","$3","$4","$11"],"default"]
+15:I[97367,["$2","$3","$4"],"OutletBoundary"]
+16:"$Sreact.suspense"
+18:"ViewportBoundary"
+19:I[97367,["$2","$3","$4"],"$18"]
+1b:"MetadataBoundary"
+1c:I[97367,["$2","$3","$4"],"$1b"]
+1e:I[68027,["$2","$3","$4"],"default",1]
+:HL["/_next/static/chunks/18qo8s9zu7qeq.css","style"]
+:HL["/_next/static/chunks/2a9kkoyz9t6kr.css","style"]
+:HC["/",""]
+f:[["children",{"s":"__PAGE__","h":512,"d":{"r":["$","$1","c",{"children":[["$","$L10",null,{"Component":"$12","serverProvidedParams":{"searchParams":{},"params":{},"promises":["$@13","$@14"]}}],[["$","script","script-0",{"src":"/_next/static/chunks/03zg7d9r0ex02.js","async":true,"nonce":"$undefined"}]],["$","$L15",null,{"children":["$","$16",null,{"name":"Next.MetadataOutlet","children":"$@17"}]}]]}],"p":false,"v":null}}]]
+0:{"P":null,"c":["",""],"q":"","i":false,"t":{"t":{"s":"","h":528,"d":{"r":["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/18qo8s9zu7qeq.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","link","1",{"rel":"stylesheet","href":"/_next/static/chunks/2a9kkoyz9t6kr.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/_next/static/chunks/0umf92h1sb77c.js","async":true,"nonce":"$undefined"}],["$","script","script-1",{"src":"/_next/static/chunks/2clkri_wpp28a.js","async":true,"nonce":"$undefined"}],["$","script","script-2",{"src":"/_next/static/chunks/0yvmodb7s437h.js","async":true,"nonce":"$undefined"}]],["$","html",null,{"lang":"en","className":"dark","suppressHydrationWarning":true,"children":[["$","head",null,{"children":[["$","script",null,{"dangerouslySetInnerHTML":{"__html":"$5"}}],["$","link",null,{"rel":"manifest","href":"/manifest.json"}],["$","link",null,{"rel":"apple-touch-icon","sizes":"180x180","href":"/icons/apple-touch-icon.png"}],["$","meta",null,{"name":"mobile-web-app-capable","content":"yes"}]]}],["$","body",null,{"className":"min-h-dvh","children":["$","$L6",null,{"children":["$","$L7",null,{"children":["$","$L8",null,{"children":[["$","$L9",null,{}],["$","$La",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$Lb",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","$Ld",null,{}],[]],"forbidden":"$undefined","unauthorized":"$undefined"}],["$","$Le",null,{}]]}]}]}]}]]}]]}],"p":false,"v":null},"c":"$Qf"},"h":{"r":["$","$1","h",{"children":[null,["$","$L19",null,{"children":"$L1a"}],["$","$L1c",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$16",null,{"name":"Next.Metadata","children":"$L1d"}]}],null]}],null]}],"p":false,"v":null}},"m":"$undefined","G":["$1e",[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/18qo8s9zu7qeq.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","link","1",{"rel":"stylesheet","href":"/_next/static/chunks/2a9kkoyz9t6kr.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]]],"S":true,"r":"$undefined","s":"$undefined","a":"$undefined","l":"$undefined","p":"$undefined","d":"$undefined","b":"xMU4xvZ-fpElCmxt9jBLl"}
+13:{}
+14:"$f:0:1:d:r:props:children:0:props:serverProvidedParams:params"
+1a:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
+1f:I[27201,["$2","$3","$4"],"IconMark"]
+17:null
+1d:[["$","title","0",{"children":"QuickTacToe"}],["$","meta","1",{"name":"description","content":"Play Tic Tac Toe with friends online. Fast, fun, and free!"}],["$","meta","2",{"property":"og:title","content":"QuickTacToe"}],["$","meta","3",{"property":"og:description","content":"Play Tic Tac Toe with friends online. Fast, fun, and free!"}],["$","meta","4",{"property":"og:url","content":"https://game-quicktactoe.vercel.app/"}],["$","meta","5",{"property":"og:site_name","content":"QuickTacToe"}],["$","meta","6",{"property":"og:image","content":"https://game-quicktactoe.vercel.app/assets/preview.png"}],["$","meta","7",{"property":"og:image:width","content":"800"}],["$","meta","8",{"property":"og:image:height","content":"600"}],["$","meta","9",{"property":"og:image","content":"https://game-quicktactoe.vercel.app/assets/preview.png"}],["$","meta","10",{"property":"og:image:width","content":"1800"}],["$","meta","11",{"property":"og:image:height","content":"1600"}],["$","meta","12",{"property":"og:image:alt","content":"QuickTacToe"}],["$","meta","13",{"name":"twitter:card","content":"summary_large_image"}],["$","meta","14",{"name":"twitter:title","content":"QuickTacToe"}],["$","meta","15",{"name":"twitter:description","content":"Play Tic Tac Toe with friends online. Fast, fun, and free!"}],["$","meta","16",{"name":"twitter:image","content":"https://game-quicktactoe.vercel.app/assets/preview.png"}],["$","link","17",{"rel":"icon","href":"/favicon.ico?favicon.40-9ztan05_f2.ico","sizes":"21x21","type":"image/x-icon"}],["$","link","18",{"rel":"icon","href":"/icons/icon-192x192.png"}],["$","link","19",{"rel":"apple-touch-icon","href":"/icons/apple-touch-icon.png"}],["$","$L1f","20",{}]]
