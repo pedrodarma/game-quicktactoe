@@ -9,7 +9,7 @@ import {
 	MediumTitle,
 	PrimaryButton,
 } from '@design_system';
-import { MOVE_DURATION } from '../board/game.utils';
+import { MATCH_DURATION } from '../board/game.utils';
 
 const _rules = [
 	{
@@ -17,8 +17,8 @@ const _rules = [
 		text: 'Play someone online in real time, the bot, or a friend on the same device.',
 	},
 	{
-		title: `${MOVE_DURATION} seconds per move`,
-		text: 'Your clock lights up on your turn. Watch the bar drain.',
+		title: `${MATCH_DURATION} seconds per match`,
+		text: 'The clock runs for the whole game. Watch the bar drain.',
 	},
 	{
 		title: 'Three in a row wins',

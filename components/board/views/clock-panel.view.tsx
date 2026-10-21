@@ -31,9 +31,9 @@ export function ClockPanel({
 	className,
 }: Props) {
 	const isX = symbol === 'X';
-	const seconds = active ? timeLeft : duration;
+	const seconds = timeLeft;
 	const urgent = active && timeLeft <= 2;
-	const percent = active ? Math.round((timeLeft / duration) * 100) : 100;
+	const percent = Math.round((timeLeft / duration) * 100);
 	const primary = emphasis === 'primary';
 
 	return (

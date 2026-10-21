@@ -6,7 +6,7 @@ import { Player } from '../../src/states/game.state';
 import {
 	CREATE_MODE,
 	gameModeFromHash,
-	MOVE_DURATION,
+	MATCH_DURATION,
 	Outcome,
 	outcomeCopy,
 	Piece,
@@ -46,9 +46,9 @@ export function GameScreen() {
 				: undefined;
 
 	const timeLeft = useMoveTimer({
-		duration: MOVE_DURATION,
+		duration: MATCH_DURATION,
 		running: isPlaying,
-		resetKey: turn,
+		resetKey: gameState.hash,
 		onExpire: timeout,
 	});
 
@@ -157,7 +157,7 @@ export function GameScreen() {
 			ghostSymbol={isMyTurn ? turnSymbol : undefined}
 			dimmed={!isMyTurn}
 			timeLeft={timeLeft}
-			duration={MOVE_DURATION}
+			duration={MATCH_DURATION}
 			onMove={move}
 		/>
 	);
